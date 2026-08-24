@@ -1,0 +1,22 @@
+# Project TODO
+
+- [x] Define safe monitoring configuration with endpoint profiles, an enforced 15-minute minimum interval, and opt-in speed tests.
+- [x] Build provider adapters for direct latency, availability, DNS lookup timing, and best-effort packet-loss measurements.
+- [x] Add a separate SQLite-compatible persistence abstraction for endpoint metadata, timestamped measurements, outage events, and labeled demo records.
+- [x] Add historical summaries for daily, weekly, monthly, and custom date ranges, explicitly separating direct values and estimates.
+- [x] Detect endpoint-scoped local availability incidents without claiming an internet-wide outage.
+- [x] Implement secure background job scheduling with one rate-limited monitoring job per endpoint profile.
+- [x] Build the responsive current-health dashboard with endpoint selection, provenance labels, and loading, empty, and error states.
+- [x] Build interactive timeline and trend charts for latency, loss, DNS, availability, and incidents with date filtering.
+- [x] Add filtered CSV and JSON exports for measurements and summary statistics.
+- [x] Add clearly identified demo data for safe first-run exploration.
+- [x] Add README, license, contribution guide, changelog, privacy and safety documentation, and runnable examples.
+- [x] Add automated tests for statistics, outage detection, persistence, malformed configuration, and recoverable measurement failures.
+- [x] Validate type checking, automated tests, production build, and responsive dashboard presentation.
+- [ ] Create a private GitHub repository, commit the project, and push the finished implementation.
+- [x] Expose grouped daily, weekly, monthly, and custom statistics through the monitoring API and dashboard.
+- [x] Add metric-specific provenance labels and a dedicated history error state.
+- [x] Add packet-loss and outage-event visualizations to the historical analytics view.
+- [x] Add CSV and JSON exports for summary statistics alongside measurement history.
+- [x] Implement true calendar-month grouping for monthly statistics instead of fixed 30-day buckets.
+- [x] Add an explicit monthly grouped-statistics view in the dashboard alongside daily, weekly, and custom views.

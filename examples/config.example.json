@@ -1,0 +1,9 @@
+{
+  "id": "office-gateway",
+  "label": "Office gateway health endpoint",
+  "url": "https://status.example.net/health",
+  "dnsHost": "status.example.net",
+  "intervalMinutes": 30,
+  "active": true,
+  "speedTestOptIn": false
+}
