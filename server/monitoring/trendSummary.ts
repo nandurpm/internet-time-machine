@@ -43,6 +43,8 @@ const summaryOutputSchema = {
       narrative: { type: "string" },
       highlights: {
         type: "array",
+        minItems: 1,
+        maxItems: 4,
         items: {
           type: "object",
           properties: {
@@ -112,6 +114,8 @@ export async function generateTrendSummary(input: TrendSummaryInput): Promise<Tr
   const model = models.data.find(candidate => candidate.id === "gpt-5-mini")?.id ?? models.data[0]?.id;
   if (!model) throw new Error("No language model is available for trend analysis.");
 
+  const systemInstruction = "You summarize network monitoring aggregates precisely. Use only the provided values. Never claim an internet-wide outage, root cause, certainty beyond the data, or a measurement that is not present. Call incidents endpoint-local. Explicitly respect direct, estimated, and simulated provenance. If simulated records dominate, say the summary is a demo interpretation.";
+  const userInstruction = `Create a concise trend summary for this aggregate JSON: ${JSON.stringify(input)}`;
   const response = await invokeLLM({
     model,
     maxTokens: 1200,
@@ -119,16 +123,27 @@ export async function generateTrendSummary(input: TrendSummaryInput): Promise<Tr
     messages: [
       {
         role: "system",
-        content: "You summarize network monitoring aggregates precisely. Use only the provided values. Never claim an internet-wide outage, root cause, certainty beyond the data, or a measurement that is not present. Call incidents endpoint-local. Explicitly respect direct, estimated, and simulated provenance. If simulated records dominate, say the summary is a demo interpretation.",
+        content: systemInstruction,
       },
       {
         role: "user",
-        content: `Create a concise trend summary for this aggregate JSON: ${JSON.stringify(input)}`,
+        content: userInstruction,
       },
     ],
   });
   const rawContent: unknown = response.choices[0]?.message.content;
-  const content = extractStructuredText(rawContent);
+  let content = extractStructuredText(rawContent);
+  if (!content) {
+    const fallback = await invokeLLM({
+      model,
+      maxTokens: 1200,
+      messages: [
+        { role: "system", content: `${systemInstruction} Return valid JSON only with headline, narrative, one to four highlights (each with finding, evidence, dataBoundary), and caveat. Do not use Markdown.` },
+        { role: "user", content: userInstruction },
+      ],
+    });
+    content = extractStructuredText(fallback.choices[0]?.message.content);
+  }
   if (!content) {
     const contentShape = rawContent === null ? "null" : Array.isArray(rawContent) ? "array" : typeof rawContent;
     const messageKeys = Object.keys((response.choices[0]?.message ?? {}) as Record<string, unknown>).join(",");
