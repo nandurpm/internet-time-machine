@@ -24,6 +24,12 @@ pnpm dev
 
 Open the local preview and create a profile under **Configuration**. A profile must use an HTTP(S) URL, omit embedded credentials, and select an allowed conservative interval. See [`examples/config.example.json`](examples/config.example.json) for the portable profile shape.
 
+## Local Windows and Linux use
+
+The repository is portable as a self-hosted Node application. After installing Node.js 22+ and pnpm, use `./run-local.sh` on Linux or `run-local.cmd` on Windows. Both commands start the application in development mode at port `3000`; pass `--port=4100` to choose a different port. For a production-like local process, run `pnpm build` followed by `pnpm start:local -- --port=4100`. Full details, including automatic free-port fallback, are in [`docs/LOCAL_RUN.md`](docs/LOCAL_RUN.md).
+
+The managed production deployment is available at **https://timemachine-alxsadqu.manus.space**. This hosted link is optional: the local application can run without the website.
+
 ## Data semantics
 
 | Label | Meaning | Appropriate use |

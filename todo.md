@@ -30,6 +30,8 @@
 - [x] Create a post-AI WebDev checkpoint that contains the validated enhancement.
 - [x] Commit and push the post-AI Project 1 changes to GitHub and verify the remote head.
 - [x] Verify the published production URL and live AI trend-summary flow for Project 1.
-- [ ] Correct the production AI response parser for structured text-content arrays and redeploy the verified fix.
-- [ ] Normalize valid overlong AI highlight arrays to the four-item dashboard presentation limit and reverify production.
-- [ ] Add documented Linux and Windows local-run support with configurable port guidance and the published Manus URL in the Project 1 README.
+- [x] Correct the production AI response parser for structured text-content arrays and redeploy the verified fix.
+- [x] Normalize valid overlong AI highlight arrays to the four-item dashboard presentation limit and reverify production.
+- [x] Add documented Linux and Windows local-run support with configurable port guidance and the published Manus URL in the Project 1 README.
+- [x] Verify the Project 1 local-run scripts, README guidance, and package scripts before marking portability support complete.
+- [ ] Checkpoint and push the verified Project 1 AI production fix, portability scripts, and documentation updates to GitHub.
