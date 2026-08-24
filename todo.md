@@ -35,3 +35,5 @@
 - [x] Add documented Linux and Windows local-run support with configurable port guidance and the published Manus URL in the Project 1 README.
 - [x] Verify the Project 1 local-run scripts, README guidance, and package scripts before marking portability support complete.
 - [x] Checkpoint and push the verified Project 1 AI production fix, portability scripts, and documentation updates to GitHub.
+- [x] Diagnose and document the external Vercel deployment response that renders server source instead of the application.
+- [x] Add client-side Markdown and PDF downloads for validated AI trend summaries and displayed highlights.

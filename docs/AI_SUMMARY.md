@@ -14,6 +14,10 @@ The AI trend-summary panel is a **user-triggered interpretation aid**, not an au
 
 The AI response is generated at request time and is not persisted by the application. The interface shows a loading state, reports failures without substituting invented analysis, and exposes the responding model identifier for transparency.
 
+## Downloading a generated summary
+
+After a validated summary is visible, the panel offers **Markdown** and **PDF** downloads. Both documents are generated in the browser from the currently displayed headline, narrative, highlights, provenance labels, model/parser identifiers, selected UTC window, and interpretation boundary. The download formatter includes the endpoint display label but deliberately does **not** include an endpoint URL, raw error text, or additional measurement-by-measurement history. PDF generation is invoked only when the user selects its download action.
+
 If a structured model response contains no visible text, the server makes one bounded plain-JSON retry using the same aggregate-only input and validates that reply against the same output contract. It does not fabricate an insight if both calls are unusable.
 
 When a summary already exists, **Refresh summary** preserves the earlier result while the new request is in progress and clearly announces that it will be replaced. This avoids a misleading empty panel during re-analysis.

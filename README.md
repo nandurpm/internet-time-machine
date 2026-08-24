@@ -30,6 +30,10 @@ The repository is portable as a self-hosted Node application. After installing N
 
 The managed production deployment is available at **https://timemachine-alxsadqu.manus.space**. This hosted link is optional: the local application can run without the website.
 
+### External hosting note
+
+The repository’s standard build emits both a Node/Express server bundle at `dist/index.js` and browser assets at `dist/public`. Deploying `dist` as a static Vercel output makes Vercel return the server bundle as JavaScript text at `/`, rather than running the dashboard. Pointing Vercel at `dist/public` alone is also not a functional full deployment because the application needs its authenticated API, SQLite-backed monitoring data, scheduler callback, and server-side AI credentials. Use the managed production URL above or the local runtime unless the application is intentionally refactored for Vercel serverless infrastructure. See [`docs/VERCEL_DEPLOYMENT.md`](docs/VERCEL_DEPLOYMENT.md) for the observed issue and a safe migration checklist.
+
 ## Data semantics
 
 | Label | Meaning | Appropriate use |
