@@ -7,7 +7,7 @@ import { DefaultMeasurementAdapter } from "./measurement";
 import { detectEndpointOutages } from "./outages";
 import { MemoryMonitoringRepository, SqliteMonitoringRepository } from "./repository";
 import { groupMeasurements, summarizeMeasurements } from "./statistics";
-import { parseTrendSummary, prepareTrendSummaryInput } from "./trendSummary";
+import { extractStructuredText, parseTrendSummary, prepareTrendSummaryInput } from "./trendSummary";
 import type { EndpointProfile, Measurement } from "./types";
 
 const endpoint: EndpointProfile = {
@@ -148,5 +148,10 @@ describe("AI trend-summary preparation", () => {
     }));
     expect(parsed.highlights[0]?.dataBoundary).toBe("direct");
     expect(() => parseTrendSummary('{"headline":"missing required fields"}')).toThrow();
+  });
+
+  it("extracts text from provider response objects and content-part arrays", () => {
+    expect(extractStructuredText({ type: "text", text: "{\"ok\":true}" })).toBe('{"ok":true}');
+    expect(extractStructuredText([{ type: "text", text: "first" }, { type: "text", text: "second" }])).toBe("first\nsecond");
   });
 });

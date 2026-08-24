@@ -97,6 +97,16 @@ export function parseTrendSummary(content: string): z.infer<typeof trendSummaryS
   return trendSummarySchema.parse(JSON.parse(content));
 }
 
+export function extractStructuredText(value: unknown): string {
+  if (typeof value === "string") return value;
+  if (Array.isArray(value)) return value.map(extractStructuredText).filter(Boolean).join("\n");
+  if (!value || typeof value !== "object") return "";
+  const candidate = value as { type?: unknown; text?: unknown; content?: unknown };
+  if (candidate.type === "text" && typeof candidate.text === "string") return candidate.text;
+  if (typeof candidate.text === "string") return candidate.text;
+  return extractStructuredText(candidate.content);
+}
+
 export async function generateTrendSummary(input: TrendSummaryInput): Promise<TrendSummary> {
   const models = await listLLMModels();
   const model = models.data.find(candidate => candidate.id === "gpt-5-mini")?.id ?? models.data[0]?.id;
@@ -117,12 +127,8 @@ export async function generateTrendSummary(input: TrendSummaryInput): Promise<Tr
       },
     ],
   });
-  const rawContent = response.choices[0]?.message.content;
-  const content = typeof rawContent === "string"
-    ? rawContent
-    : Array.isArray(rawContent)
-      ? rawContent.filter(part => part.type === "text").map(part => part.text).join("\n")
-      : "";
+  const rawContent: unknown = response.choices[0]?.message.content;
+  const content = extractStructuredText(rawContent);
   if (!content) throw new Error("The trend model returned no structured text.");
   return { ...parseTrendSummary(content), generatedAt: Date.now(), model };
 }
