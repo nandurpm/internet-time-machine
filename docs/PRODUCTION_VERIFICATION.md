@@ -13,3 +13,5 @@ The first parser correction alone did not resolve the live request. A minimal di
 After the GPT completion-budget release, the authenticated production action again entered the expected loading state. The request remained pending across the first short verification window, so no successful summary or new user-facing error was yet available to record. The next check must allow the request to settle before deciding whether further timeout or response handling is required.
 
 The completed retest still showed the recoverable no-text message. A direct probe using the exact schema and representative aggregate payload returned valid JSON. The response extractor is therefore being extended to support provider object payloads as well as plain strings and arrays before the next production verification.
+
+The hardened extractor did not resolve the live behavior, despite the successful direct model probe. A temporary privacy-preserving production diagnostic now records only the response content shape, response message keys, and finish reason—not any endpoint, aggregate, or model text—so the remaining runtime discrepancy can be identified safely.

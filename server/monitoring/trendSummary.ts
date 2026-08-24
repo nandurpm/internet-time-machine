@@ -129,6 +129,11 @@ export async function generateTrendSummary(input: TrendSummaryInput): Promise<Tr
   });
   const rawContent: unknown = response.choices[0]?.message.content;
   const content = extractStructuredText(rawContent);
-  if (!content) throw new Error("The trend model returned no structured text.");
+  if (!content) {
+    const contentShape = rawContent === null ? "null" : Array.isArray(rawContent) ? "array" : typeof rawContent;
+    const messageKeys = Object.keys((response.choices[0]?.message ?? {}) as Record<string, unknown>).join(",");
+    console.warn(`[TrendSummary] Empty model content; shape=${contentShape}; messageKeys=${messageKeys}; finish=${response.choices[0]?.finish_reason ?? "unknown"}`);
+    throw new Error("The trend model returned no structured text.");
+  }
   return { ...parseTrendSummary(content), generatedAt: Date.now(), model };
 }
