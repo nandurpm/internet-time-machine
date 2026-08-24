@@ -16,6 +16,7 @@ const trendSummarySchema = z.object({
 export type TrendSummary = z.infer<typeof trendSummarySchema> & {
   generatedAt: number;
   model: string;
+  parserVersion: "2026-08-24-live";
 };
 
 export type TrendSummaryInput = {
@@ -109,14 +110,22 @@ export function extractStructuredText(value: unknown): string {
   return extractStructuredText(candidate.content);
 }
 
+function withModelTimeout<T>(promise: Promise<T>, timeoutMs: number): Promise<T> {
+  return Promise.race([
+    promise,
+    new Promise<T>((_, reject) => setTimeout(() => reject(new Error("AI summary request timed out after 25 seconds.")), timeoutMs)),
+  ]);
+}
+
 export async function generateTrendSummary(input: TrendSummaryInput): Promise<TrendSummary> {
   const models = await listLLMModels();
-  const model = models.data.find(candidate => candidate.id === "gpt-5-mini")?.id ?? models.data[0]?.id;
-  if (!model) throw new Error("No language model is available for trend analysis.");
+  const model = "gpt-5-mini";
+  if (!models.data.some(candidate => candidate.id === model)) throw new Error("The required gpt-5-mini trend model is unavailable.");
 
   const systemInstruction = "You summarize network monitoring aggregates precisely. Use only the provided values. Never claim an internet-wide outage, root cause, certainty beyond the data, or a measurement that is not present. Call incidents endpoint-local. Explicitly respect direct, estimated, and simulated provenance. If simulated records dominate, say the summary is a demo interpretation.";
   const userInstruction = `Create a concise trend summary for this aggregate JSON: ${JSON.stringify(input)}`;
-  const response = await invokeLLM({
+  const startedAt = Date.now();
+  const response = await withModelTimeout(invokeLLM({
     model,
     maxTokens: 1200,
     outputSchema: summaryOutputSchema,
@@ -130,25 +139,25 @@ export async function generateTrendSummary(input: TrendSummaryInput): Promise<Tr
         content: userInstruction,
       },
     ],
-  });
+  }), 25_000);
   const rawContent: unknown = response.choices[0]?.message.content;
   let content = extractStructuredText(rawContent);
   if (!content) {
-    const fallback = await invokeLLM({
+    const fallback = await withModelTimeout(invokeLLM({
       model,
       maxTokens: 1200,
       messages: [
         { role: "system", content: `${systemInstruction} Return valid JSON only with headline, narrative, one to four highlights (each with finding, evidence, dataBoundary), and caveat. Do not use Markdown.` },
         { role: "user", content: userInstruction },
       ],
-    });
+    }), 25_000);
     content = extractStructuredText(fallback.choices[0]?.message.content);
   }
   if (!content) {
     const contentShape = rawContent === null ? "null" : Array.isArray(rawContent) ? "array" : typeof rawContent;
     const messageKeys = Object.keys((response.choices[0]?.message ?? {}) as Record<string, unknown>).join(",");
     console.warn(`[TrendSummary] Empty model content; shape=${contentShape}; messageKeys=${messageKeys}; finish=${response.choices[0]?.finish_reason ?? "unknown"}`);
-    throw new Error("The trend model returned no structured text.");
+    throw new Error(`AI summary produced no visible text (model=${model}; finish=${response.choices[0]?.finish_reason ?? "unknown"}; elapsedMs=${Date.now() - startedAt}; content=${contentShape}).`);
   }
-  return { ...parseTrendSummary(content), generatedAt: Date.now(), model };
+  return { ...parseTrendSummary(content), generatedAt: Date.now(), model, parserVersion: "2026-08-24-live" };
 }
