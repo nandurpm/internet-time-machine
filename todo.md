@@ -34,4 +34,4 @@
 - [x] Normalize valid overlong AI highlight arrays to the four-item dashboard presentation limit and reverify production.
 - [x] Add documented Linux and Windows local-run support with configurable port guidance and the published Manus URL in the Project 1 README.
 - [x] Verify the Project 1 local-run scripts, README guidance, and package scripts before marking portability support complete.
-- [ ] Checkpoint and push the verified Project 1 AI production fix, portability scripts, and documentation updates to GitHub.
+- [x] Checkpoint and push the verified Project 1 AI production fix, portability scripts, and documentation updates to GitHub.
