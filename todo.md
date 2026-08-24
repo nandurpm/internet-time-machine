@@ -38,3 +38,5 @@
 - [x] Diagnose and document the external Vercel deployment response that renders server source instead of the application.
 - [x] Add client-side Markdown and PDF downloads for validated AI trend summaries and displayed highlights.
 - [x] Add a user-selected multi-summary batch PDF export without weakening existing provenance and interpretation safeguards.
+- [x] Add accessible drag-and-drop reordering to the session-only batch-PDF queue.
+- [x] Restore an explicit accessible label for each batch-queue selection checkbox after adding draggable queue rows.

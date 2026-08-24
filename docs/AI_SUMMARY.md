@@ -20,6 +20,8 @@ After a validated summary is visible, the panel offers **Markdown** and **PDF** 
 
 Users can also select **Add to batch** for several generated summaries and choose which queued items to include in one **Batch PDF**. Each selected summary is page-separated and retains its own endpoint label, UTC window, model/parser fields, provenance-bearing highlights, and caveat. The queue is held only in the current browser session; it is not stored by the application and no extra source data is sent to the model to create the export.
 
+Queue rows can be reordered with drag and drop before export. Visible move-up and move-down buttons provide a keyboard-accessible alternative, and the batch PDF follows that exact displayed queue order.
+
 If a structured model response contains no visible text, the server makes one bounded plain-JSON retry using the same aggregate-only input and validates that reply against the same output contract. It does not fabricate an insight if both calls are unusable.
 
 When a summary already exists, **Refresh summary** preserves the earlier result while the new request is in progress and clearly announces that it will be replaced. This avoids a misleading empty panel during re-analysis.

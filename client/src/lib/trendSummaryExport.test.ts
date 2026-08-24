@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { trendSummaryBatchFilename, trendSummaryFilename, trendSummaryMarkdown } from "./trendSummaryExport";
+import { reorderTrendSummaryQueue, trendSummaryBatchFilename, trendSummaryFilename, trendSummaryMarkdown } from "./trendSummaryExport";
 
 const summary = {
   headline: "Stable endpoint-local measurements",
@@ -23,5 +23,11 @@ describe("trend summary export", () => {
   it("creates download-safe endpoint filenames", () => {
     expect(trendSummaryFilename("Office DNS / East", "md")).toBe("internet-time-machine-trend-summary-office-dns-east.md");
     expect(trendSummaryBatchFilename(3)).toBe("internet-time-machine-trend-summaries-3.pdf");
+  });
+
+  it("reorders a selected batch queue without changing unknown or identical positions", () => {
+    const items = [{ id: "first" }, { id: "second" }, { id: "third" }];
+    expect(reorderTrendSummaryQueue(items, "third", "first").map(item => item.id)).toEqual(["third", "first", "second"]);
+    expect(reorderTrendSummaryQueue(items, "first", "missing")).toBe(items);
   });
 });

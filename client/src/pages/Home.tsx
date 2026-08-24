@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import DashboardLayout from "@/components/DashboardLayout";
 import { trpc } from "@/lib/trpc";
-import { downloadTrendSummaryBatchPdf, downloadTrendSummaryMarkdown, downloadTrendSummaryPdf, type TrendSummaryExportContext } from "@/lib/trendSummaryExport";
+import { downloadTrendSummaryBatchPdf, downloadTrendSummaryMarkdown, downloadTrendSummaryPdf, reorderTrendSummaryQueue, type TrendSummaryExportContext } from "@/lib/trendSummaryExport";
 import { useMemo, useState } from "react";
 import {
   Area,
@@ -21,10 +21,13 @@ import {
   Activity,
   AlertTriangle,
   ArrowDownToLine,
+  ArrowDown,
+  ArrowUp,
   Clock3,
   Database,
   Download,
   Gauge,
+  GripVertical,
   Loader2,
   Network,
   Plus,
@@ -154,6 +157,7 @@ export default function Home() {
     useState<SummaryGranularity>("daily");
   const [isRefreshingSummary, setIsRefreshingSummary] = useState(false);
   const [summaryPdfQueue, setSummaryPdfQueue] = useState<QueuedTrendSummary[]>([]);
+  const [draggedSummaryId, setDraggedSummaryId] = useState<string | null>(null);
   const [customFrom, setCustomFrom] = useState(() =>
     new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10)
   );
@@ -268,6 +272,17 @@ export default function Home() {
     };
     const id = `${endpointId}:${dateRange.from}:${dateRange.to}:${trendSummary.data.generatedAt}`;
     setSummaryPdfQueue(current => current.some(item => item.id === id) ? current : [...current, { ...context, id, selected: true }]);
+  };
+  const reorderPdfQueue = (sourceId: string, targetId: string) => {
+    setSummaryPdfQueue(current => reorderTrendSummaryQueue(current, sourceId, targetId));
+    setDraggedSummaryId(null);
+  };
+  const movePdfQueueItem = (id: string, direction: "up" | "down") => {
+    setSummaryPdfQueue(current => {
+      const index = current.findIndex(item => item.id === id);
+      const target = direction === "up" ? index - 1 : index + 1;
+      return target < 0 || target >= current.length ? current : reorderTrendSummaryQueue(current, id, current[target].id);
+    });
   };
   const periodLabel = (key: string) =>
     /^\d{4}-\d{2}$/.test(key)
@@ -946,7 +961,7 @@ export default function Home() {
                             Session PDF queue
                           </p>
                           <p className="mt-1 text-sm text-indigo-950">
-                            Select generated summaries to combine in one local PDF. The queue stays only in this browser session.
+                            Drag a queue row to set PDF order, or use its move buttons. The queue stays only in this browser session.
                           </p>
                         </div>
                         <Button
@@ -962,13 +977,20 @@ export default function Home() {
                         </Button>
                       </div>
                       <div className="mt-3 grid gap-2">
-                        {summaryPdfQueue.map(item => (
-                          <label
+                        {summaryPdfQueue.map((item, index) => (
+                          <div
                             key={item.id}
-                            className="flex cursor-pointer items-start gap-2 rounded-lg bg-white/80 px-3 py-2 text-sm text-slate-800"
+                            draggable
+                            onDragStart={() => setDraggedSummaryId(item.id)}
+                            onDragEnd={() => setDraggedSummaryId(null)}
+                            onDragOver={event => event.preventDefault()}
+                            onDrop={() => draggedSummaryId && reorderPdfQueue(draggedSummaryId, item.id)}
+                            className={`flex items-start gap-2 rounded-lg bg-white/80 px-3 py-2 text-sm text-slate-800 transition ${draggedSummaryId === item.id ? "opacity-50" : ""}`}
                           >
+                            <GripVertical className="mt-0.5 h-4 w-4 shrink-0 text-slate-400" aria-hidden="true" />
                             <input
                               type="checkbox"
+                              aria-label={`Include ${item.endpointLabel} summary: ${item.summary.headline}`}
                               checked={item.selected}
                               onChange={() =>
                                 setSummaryPdfQueue(current =>
@@ -986,7 +1008,11 @@ export default function Home() {
                               {new Date(item.to).toLocaleDateString()} ·{" "}
                               {item.summary.headline}
                             </span>
-                          </label>
+                            <span className="ml-auto flex shrink-0 gap-1">
+                              <button type="button" className="rounded border border-slate-200 p-1 text-slate-500 disabled:opacity-40" aria-label={`Move ${item.summary.headline} up`} disabled={index === 0} onClick={() => movePdfQueueItem(item.id, "up")}><ArrowUp className="h-3.5 w-3.5" /></button>
+                              <button type="button" className="rounded border border-slate-200 p-1 text-slate-500 disabled:opacity-40" aria-label={`Move ${item.summary.headline} down`} disabled={index === summaryPdfQueue.length - 1} onClick={() => movePdfQueueItem(item.id, "down")}><ArrowDown className="h-3.5 w-3.5" /></button>
+                            </span>
+                          </div>
                         ))}
                       </div>
                     </div>

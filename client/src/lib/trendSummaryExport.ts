@@ -66,6 +66,16 @@ export function trendSummaryBatchFilename(count: number) {
   return `internet-time-machine-trend-summaries-${Math.max(1, count)}.pdf`;
 }
 
+export function reorderTrendSummaryQueue<T extends { id: string }>(items: T[], sourceId: string, targetId: string) {
+  const sourceIndex = items.findIndex(item => item.id === sourceId);
+  const targetIndex = items.findIndex(item => item.id === targetId);
+  if (sourceIndex < 0 || targetIndex < 0 || sourceIndex === targetIndex) return items;
+  const reordered = [...items];
+  const [moved] = reordered.splice(sourceIndex, 1);
+  reordered.splice(targetIndex, 0, moved);
+  return reordered;
+}
+
 function downloadBlob(filename: string, blob: Blob) {
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
