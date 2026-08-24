@@ -62,6 +62,10 @@ export function trendSummaryFilename(endpointLabel: string, extension: "md" | "p
   return `internet-time-machine-trend-summary-${slug}.${extension}`;
 }
 
+export function trendSummaryBatchFilename(count: number) {
+  return `internet-time-machine-trend-summaries-${Math.max(1, count)}.pdf`;
+}
+
 function downloadBlob(filename: string, blob: Blob) {
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
@@ -95,4 +99,28 @@ export async function downloadTrendSummaryPdf(context: TrendSummaryExportContext
     y += lineHeight;
   }
   document.save(trendSummaryFilename(context.endpointLabel, "pdf"));
+}
+
+export async function downloadTrendSummaryBatchPdf(contexts: TrendSummaryExportContext[]) {
+  if (!contexts.length) return;
+  const { jsPDF } = await import("jspdf");
+  const document = new jsPDF({ unit: "pt", format: "a4" });
+  const margin = 46;
+  const lineHeight = 15;
+  const pageHeight = document.internal.pageSize.getHeight();
+  const pageWidth = document.internal.pageSize.getWidth();
+  contexts.forEach((context, index) => {
+    if (index) document.addPage();
+    const lines = document.splitTextToSize(`Batch summary ${index + 1} of ${contexts.length}\n\n${trendSummaryMarkdown(context)}`, pageWidth - margin * 2);
+    let y = margin;
+    for (const line of lines) {
+      if (y > pageHeight - margin) {
+        document.addPage();
+        y = margin;
+      }
+      document.text(line, margin, y);
+      y += lineHeight;
+    }
+  });
+  document.save(trendSummaryBatchFilename(contexts.length));
 }

@@ -37,3 +37,4 @@
 - [x] Checkpoint and push the verified Project 1 AI production fix, portability scripts, and documentation updates to GitHub.
 - [x] Diagnose and document the external Vercel deployment response that renders server source instead of the application.
 - [x] Add client-side Markdown and PDF downloads for validated AI trend summaries and displayed highlights.
+- [x] Add a user-selected multi-summary batch PDF export without weakening existing provenance and interpretation safeguards.

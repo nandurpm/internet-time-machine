@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { trendSummaryFilename, trendSummaryMarkdown } from "./trendSummaryExport";
+import { trendSummaryBatchFilename, trendSummaryFilename, trendSummaryMarkdown } from "./trendSummaryExport";
 
 const summary = {
   headline: "Stable endpoint-local measurements",
@@ -22,5 +22,6 @@ describe("trend summary export", () => {
 
   it("creates download-safe endpoint filenames", () => {
     expect(trendSummaryFilename("Office DNS / East", "md")).toBe("internet-time-machine-trend-summary-office-dns-east.md");
+    expect(trendSummaryBatchFilename(3)).toBe("internet-time-machine-trend-summaries-3.pdf");
   });
 });

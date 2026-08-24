@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import DashboardLayout from "@/components/DashboardLayout";
 import { trpc } from "@/lib/trpc";
-import { downloadTrendSummaryMarkdown, downloadTrendSummaryPdf } from "@/lib/trendSummaryExport";
+import { downloadTrendSummaryBatchPdf, downloadTrendSummaryMarkdown, downloadTrendSummaryPdf, type TrendSummaryExportContext } from "@/lib/trendSummaryExport";
 import { useMemo, useState } from "react";
 import {
   Area,
@@ -36,6 +36,7 @@ import {
 
 type RangePreset = "24h" | "7d" | "30d" | "custom";
 type SummaryGranularity = "daily" | "weekly" | "monthly" | "custom";
+type QueuedTrendSummary = TrendSummaryExportContext & { id: string; selected: boolean };
 
 const formatter = new Intl.NumberFormat("en-US", { maximumFractionDigits: 1 });
 const dateTime = (value: number) =>
@@ -152,6 +153,7 @@ export default function Home() {
   const [summaryGranularity, setSummaryGranularity] =
     useState<SummaryGranularity>("daily");
   const [isRefreshingSummary, setIsRefreshingSummary] = useState(false);
+  const [summaryPdfQueue, setSummaryPdfQueue] = useState<QueuedTrendSummary[]>([]);
   const [customFrom, setCustomFrom] = useState(() =>
     new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10)
   );
@@ -255,6 +257,18 @@ export default function Home() {
         },
       ]
     : [];
+  const selectedPdfSummaries = summaryPdfQueue.filter(item => item.selected);
+  const addCurrentSummaryToPdfQueue = () => {
+    if (!trendSummary.data) return;
+    const context: TrendSummaryExportContext = {
+      endpointLabel: endpoint?.label ?? endpointId,
+      from: dateRange.from,
+      to: dateRange.to,
+      summary: trendSummary.data,
+    };
+    const id = `${endpointId}:${dateRange.from}:${dateRange.to}:${trendSummary.data.generatedAt}`;
+    setSummaryPdfQueue(current => current.some(item => item.id === id) ? current : [...current, { ...context, id, selected: true }]);
+  };
   const periodLabel = (key: string) =>
     /^\d{4}-\d{2}$/.test(key)
       ? new Intl.DateTimeFormat("en", {
@@ -888,6 +902,14 @@ export default function Home() {
                         <ArrowDownToLine className="mr-1.5 h-3.5 w-3.5" />
                         PDF
                       </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="rounded-lg"
+                        onClick={addCurrentSummaryToPdfQueue}
+                      >
+                        Add to batch
+                      </Button>
                     </div>
                   </div>
                   <div className="mt-5 grid gap-3 md:grid-cols-3">
@@ -916,6 +938,59 @@ export default function Home() {
                     <strong>Interpretation boundary.</strong>{" "}
                     {trendSummary.data.caveat}
                   </div>
+                  {summaryPdfQueue.length > 0 && (
+                    <div className="mt-5 rounded-xl border border-indigo-100 bg-indigo-50 p-4">
+                      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                        <div>
+                          <p className="text-xs font-bold uppercase tracking-[0.14em] text-indigo-700">
+                            Session PDF queue
+                          </p>
+                          <p className="mt-1 text-sm text-indigo-950">
+                            Select generated summaries to combine in one local PDF. The queue stays only in this browser session.
+                          </p>
+                        </div>
+                        <Button
+                          size="sm"
+                          className="rounded-lg bg-indigo-600 hover:bg-indigo-700"
+                          disabled={!selectedPdfSummaries.length}
+                          onClick={() => {
+                            void downloadTrendSummaryBatchPdf(selectedPdfSummaries);
+                          }}
+                        >
+                          <ArrowDownToLine className="mr-1.5 h-3.5 w-3.5" />
+                          Batch PDF ({selectedPdfSummaries.length})
+                        </Button>
+                      </div>
+                      <div className="mt-3 grid gap-2">
+                        {summaryPdfQueue.map(item => (
+                          <label
+                            key={item.id}
+                            className="flex cursor-pointer items-start gap-2 rounded-lg bg-white/80 px-3 py-2 text-sm text-slate-800"
+                          >
+                            <input
+                              type="checkbox"
+                              checked={item.selected}
+                              onChange={() =>
+                                setSummaryPdfQueue(current =>
+                                  current.map(candidate =>
+                                    candidate.id === item.id
+                                      ? { ...candidate, selected: !candidate.selected }
+                                      : candidate
+                                  )
+                                )
+                              }
+                            />
+                            <span>
+                              <strong>{item.endpointLabel}</strong> ·{" "}
+                              {new Date(item.from).toLocaleDateString()}–
+                              {new Date(item.to).toLocaleDateString()} ·{" "}
+                              {item.summary.headline}
+                            </span>
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
             </section>
