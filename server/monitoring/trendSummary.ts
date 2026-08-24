@@ -104,7 +104,7 @@ export async function generateTrendSummary(input: TrendSummaryInput): Promise<Tr
 
   const response = await invokeLLM({
     model,
-    maxTokens: 900,
+    maxTokens: 1200,
     outputSchema: summaryOutputSchema,
     messages: [
       {
