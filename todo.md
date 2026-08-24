@@ -40,3 +40,4 @@
 - [x] Add a user-selected multi-summary batch PDF export without weakening existing provenance and interpretation safeguards.
 - [x] Add accessible drag-and-drop reordering to the session-only batch-PDF queue.
 - [x] Restore an explicit accessible label for each batch-queue selection checkbox after adding draggable queue rows.
+- [x] Document verification of the custom live domain and add it to hosted-link guidance.

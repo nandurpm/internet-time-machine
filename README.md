@@ -28,7 +28,7 @@ Open the local preview and create a profile under **Configuration**. A profile m
 
 The repository is portable as a self-hosted Node application. After installing Node.js 22+ and pnpm, use `./run-local.sh` on Linux or `run-local.cmd` on Windows. Both commands start the application in development mode at port `3000`; pass `--port=4100` to choose a different port. For a production-like local process, run `pnpm build` followed by `pnpm start:local -- --port=4100`. Full details, including automatic free-port fallback, are in [`docs/LOCAL_RUN.md`](docs/LOCAL_RUN.md).
 
-The managed production deployment is available at **https://timemachine-alxsadqu.manus.space**. This hosted link is optional: the local application can run without the website.
+The managed production deployment is available at **https://timemachine-alxsadqu.manus.space**. The connected custom live domain **https://monitor.nandakumarm.dpdns.org/** was also verified on 24 August 2026: it loaded the Internet Time Machine dashboard and its explicitly labeled simulated demo data. These hosted links are optional: the local application can run without the website.
 
 ### External hosting note
 
