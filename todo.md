@@ -31,4 +31,5 @@
 - [x] Commit and push the post-AI Project 1 changes to GitHub and verify the remote head.
 - [x] Verify the published production URL and live AI trend-summary flow for Project 1.
 - [ ] Correct the production AI response parser for structured text-content arrays and redeploy the verified fix.
+- [ ] Normalize valid overlong AI highlight arrays to the four-item dashboard presentation limit and reverify production.
 - [ ] Add documented Linux and Windows local-run support with configurable port guidance and the published Manus URL in the Project 1 README.

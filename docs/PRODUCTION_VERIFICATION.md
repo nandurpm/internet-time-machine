@@ -17,3 +17,5 @@ The completed retest still showed the recoverable no-text message. A direct prob
 The hardened extractor did not resolve the live behavior, despite the successful direct model probe. A temporary privacy-preserving production diagnostic now records only the response content shape, response message keys, and finish reason—not any endpoint, aggregate, or model text—so the remaining runtime discrepancy can be identified safely.
 
 The published domain, authentication flow, and summary UI were verified successfully. The final authenticated summary request still reached its recoverable no-text state, so the live AI summary does **not** yet pass end-to-end verification. This remains an explicitly tracked issue; no production network conclusion was generated or substituted.
+
+The forced-model, bounded request exposed the actual production response: the model returned valid structured data with more than the dashboard’s four-highlight presentation limit. The parser is now being adjusted to accept a bounded model list and deterministically retain the first four validated highlights for display.

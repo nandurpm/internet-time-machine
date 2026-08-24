@@ -154,4 +154,14 @@ describe("AI trend-summary preparation", () => {
     expect(extractStructuredText({ type: "text", text: "{\"ok\":true}" })).toBe('{"ok":true}');
     expect(extractStructuredText([{ type: "text", text: "first" }, { type: "text", text: "second" }])).toBe("first\nsecond");
   });
+
+  it("normalizes an overlong valid highlight list to the four-item dashboard limit", () => {
+    const summary = parseTrendSummary(JSON.stringify({
+      headline: "Simulated endpoint trend summary",
+      narrative: "This intentionally simulated record set demonstrates a local monitoring interpretation with clear provenance.",
+      highlights: Array.from({ length: 5 }, (_, index) => ({ finding: `Finding ${index} is simulated`, evidence: `Evidence ${index} comes from the simulated aggregate.`, dataBoundary: "simulated" })),
+      caveat: "This is simulated demo history and does not establish a live or internet-wide condition.",
+    }));
+    expect(summary.highlights).toHaveLength(4);
+  });
 });

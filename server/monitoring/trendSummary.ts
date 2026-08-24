@@ -9,7 +9,7 @@ const trendSummarySchema = z.object({
     finding: z.string().min(8).max(220),
     evidence: z.string().min(5).max(180),
     dataBoundary: z.enum(["direct", "estimated", "simulated", "mixed"]),
-  })).min(1).max(4),
+  })).min(1).max(12),
   caveat: z.string().min(20).max(260),
 });
 
@@ -45,7 +45,7 @@ const summaryOutputSchema = {
       highlights: {
         type: "array",
         minItems: 1,
-        maxItems: 4,
+        maxItems: 12,
         items: {
           type: "object",
           properties: {
@@ -97,7 +97,8 @@ export function prepareTrendSummaryInput(
 }
 
 export function parseTrendSummary(content: string): z.infer<typeof trendSummarySchema> {
-  return trendSummarySchema.parse(JSON.parse(content));
+  const parsed = trendSummarySchema.parse(JSON.parse(content));
+  return { ...parsed, highlights: parsed.highlights.slice(0, 4) };
 }
 
 export function extractStructuredText(value: unknown): string {
