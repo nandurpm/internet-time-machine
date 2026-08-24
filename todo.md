@@ -29,3 +29,6 @@
 - [x] Document managed-hosting publication, production URL handoff, and external-hosting limitations for Project 1.
 - [x] Create a post-AI WebDev checkpoint that contains the validated enhancement.
 - [x] Commit and push the post-AI Project 1 changes to GitHub and verify the remote head.
+- [ ] Verify the published production URL and live AI trend-summary flow for Project 1.
+- [ ] Correct the production AI response parser for structured text-content arrays and redeploy the verified fix.
+- [ ] Add documented Linux and Windows local-run support with configurable port guidance and the published Manus URL in the Project 1 README.

@@ -117,7 +117,12 @@ export async function generateTrendSummary(input: TrendSummaryInput): Promise<Tr
       },
     ],
   });
-  const content = response.choices[0]?.message.content;
-  if (typeof content !== "string") throw new Error("The trend model returned no structured text.");
+  const rawContent = response.choices[0]?.message.content;
+  const content = typeof rawContent === "string"
+    ? rawContent
+    : Array.isArray(rawContent)
+      ? rawContent.filter(part => part.type === "text").map(part => part.text).join("\n")
+      : "";
+  if (!content) throw new Error("The trend model returned no structured text.");
   return { ...parseTrendSummary(content), generatedAt: Date.now(), model };
 }
