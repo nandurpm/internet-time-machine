@@ -20,3 +20,12 @@
 - [x] Add CSV and JSON exports for summary statistics alongside measurement history.
 - [x] Implement true calendar-month grouping for monthly statistics instead of fixed 30-day buckets.
 - [x] Add an explicit monthly grouped-statistics view in the dashboard alongside daily, weekly, and custom views.
+- [x] Add a server-side AI trend-summary feature that analyzes selected endpoint history and preserves direct, estimated, and simulated data boundaries.
+- [x] Add a dashboard panel with loading, error, and refresh states for the AI-generated trend summary.
+- [x] Add automated tests for deterministic AI-summary input preparation and output validation.
+- [x] Update Project 1 documentation with AI-summary behavior, data handling, and managed-hosting deployment handoff.
+- [ ] Revalidate Project 1, create a checkpoint, and push the AI-summary enhancement to GitHub.
+- [x] Add an explicit AI-summary refresh flow that clearly replaces an existing summary during a new analysis request.
+- [x] Document managed-hosting publication, production URL handoff, and external-hosting limitations for Project 1.
+- [ ] Create a post-AI WebDev checkpoint that contains the validated enhancement.
+- [ ] Commit and push the post-AI Project 1 changes to GitHub and verify the remote head.

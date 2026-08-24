@@ -65,6 +65,10 @@ export class SqliteMonitoringRepository implements MonitoringRepository {
         id TEXT PRIMARY KEY, endpoint_id TEXT NOT NULL, started_at INTEGER NOT NULL, resolved_at INTEGER,
         consecutive_failures INTEGER NOT NULL, scope TEXT NOT NULL, summary TEXT NOT NULL, is_demo INTEGER NOT NULL
       ) STRICT;
+      DELETE FROM outage_events
+      WHERE id NOT IN (
+        SELECT MIN(id) FROM outage_events GROUP BY endpoint_id, started_at
+      );
     `);
   }
 
@@ -91,7 +95,10 @@ export class SqliteMonitoringRepository implements MonitoringRepository {
   listOutages(endpointId: string, from = 0, to = Number.MAX_SAFE_INTEGER): OutageEvent[] {
     return (this.database.prepare("SELECT * FROM outage_events WHERE endpoint_id = ? AND started_at BETWEEN ? AND ? ORDER BY started_at").all(endpointId, from, to) as Record<string, unknown>[]).map(rowToOutage);
   }
-  saveOutage(event: OutageEvent) { this.database.prepare("INSERT OR IGNORE INTO outage_events VALUES (?, ?, ?, ?, ?, ?, ?, ?)").run(event.id, event.endpointId, event.startedAt, event.resolvedAt, event.consecutiveFailures, event.scope, event.summary, Number(event.isDemo)); }
+  saveOutage(event: OutageEvent) {
+    const existing = this.database.prepare("SELECT id FROM outage_events WHERE endpoint_id = ? AND started_at = ? LIMIT 1").get(event.endpointId, event.startedAt);
+    if (!existing) this.database.prepare("INSERT INTO outage_events VALUES (?, ?, ?, ?, ?, ?, ?, ?)").run(event.id, event.endpointId, event.startedAt, event.resolvedAt, event.consecutiveFailures, event.scope, event.summary, Number(event.isDemo));
+  }
 }
 
 const rowToEndpoint = (row: Record<string, unknown>): EndpointProfile => ({ id: String(row.id), label: String(row.label), url: String(row.url), dnsHost: String(row.dns_host), intervalMinutes: Number(row.interval_minutes), active: Boolean(row.active), speedTestOptIn: Boolean(row.speed_test_opt_in), scheduleTaskUid: row.schedule_task_uid ? String(row.schedule_task_uid) : null, createdAt: Number(row.created_at), updatedAt: Number(row.updated_at) });

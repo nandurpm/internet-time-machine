@@ -34,6 +34,12 @@ Open the local preview and create a profile under **Configuration**. A profile m
 
 Download and upload testing is **opt-in**. The default adapter does not initiate a bandwidth transfer, even after opt-in, unless a dedicated adapter has been supplied. This prevents a dashboard from silently creating expensive or aggressive traffic.
 
+## AI trend summary
+
+The dashboard includes a user-triggered **AI trend summary** for the currently selected endpoint and date range. The server prepares a compact aggregate containing metric averages, record provenance totals, time boundaries, and endpoint-local incident counts. It intentionally excludes endpoint URLs and raw error messages. The model is asked to preserve the direct, estimated, and simulated distinction and to avoid claims about broader internet conditions or root causes.
+
+Summaries are not generated automatically; a signed-in user explicitly selects **Generate summary**. The feature currently selects the live `gpt-5-mini` model when available and uses project AI usage for each request. Read [`docs/AI_SUMMARY.md`](docs/AI_SUMMARY.md) for the full data boundary and output contract.
+
 ## Background collection
 
 After the site is deployed, sign in, create an active profile, and use **Enable schedule**. The scheduler creates one authenticated collection callback for the endpoint and persists the scheduler identifier against that profile. The callback looks up the profile using the authenticated job identity rather than trusting a client-supplied endpoint ID.

@@ -7,6 +7,7 @@ import { systemRouter } from "./_core/systemRouter";
 import { protectedProcedure, publicProcedure, router } from "./_core/trpc";
 import { intervalToSafeCron } from "./monitoring/config";
 import { collectMeasurement, createEndpointProfile, getHistory, listEndpointProfiles, updateEndpointSchedule } from "./monitoring/service";
+import { generateTrendSummary, prepareTrendSummaryInput } from "./monitoring/trendSummary";
 
 const historyInput = z.object({
   endpointId: z.string().min(1),
@@ -41,6 +42,13 @@ export const appRouter = router({
   monitoring: router({
     endpoints: publicProcedure.query(() => listEndpointProfiles()),
     history: publicProcedure.input(historyInput).query(({ input }) => getHistory(input.endpointId, input.from, input.to)),
+    trendSummary: protectedProcedure.input(historyInput).mutation(async ({ input }) => {
+      const endpoint = listEndpointProfiles().find(profile => profile.id === input.endpointId);
+      if (!endpoint) throw new Error("Endpoint profile was not found.");
+      const history = getHistory(input.endpointId, input.from, input.to);
+      const prepared = prepareTrendSummaryInput(endpoint, history.statistics, history.outages, history.measurements.map(record => record.timestamp));
+      return generateTrendSummary(prepared);
+    }),
     saveEndpoint: protectedProcedure.input(endpointInput).mutation(({ input }) => createEndpointProfile(input)),
     measureNow: protectedProcedure.input(z.object({ endpointId: z.string().min(1) })).mutation(({ input }) => collectMeasurement(input.endpointId)),
     schedule: protectedProcedure.input(z.object({ endpointId: z.string().min(1) })).mutation(async ({ ctx, input }) => {

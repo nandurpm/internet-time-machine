@@ -7,6 +7,7 @@ import { DefaultMeasurementAdapter } from "./measurement";
 import { detectEndpointOutages } from "./outages";
 import { MemoryMonitoringRepository, SqliteMonitoringRepository } from "./repository";
 import { groupMeasurements, summarizeMeasurements } from "./statistics";
+import { parseTrendSummary, prepareTrendSummaryInput } from "./trendSummary";
 import type { EndpointProfile, Measurement } from "./types";
 
 const endpoint: EndpointProfile = {
@@ -101,8 +102,10 @@ describe("persistence", () => {
       measurement({ id: "c", timestamp: 12, availability: false }),
     ])[0];
     repository.saveOutage(event);
+    repository.saveOutage({ ...event, id: "duplicate-event" });
     expect(repository.getEndpoint(endpoint.id)?.label).toBe("Test endpoint");
     expect(repository.listMeasurements(endpoint.id)[0]?.timestamp).toBe(42);
+    expect(repository.listOutages(endpoint.id)).toHaveLength(1);
     expect(repository.listOutages(endpoint.id)[0]?.scope).toBe("endpoint-local");
   });
 
@@ -122,5 +125,28 @@ describe("measurement failures", () => {
     expect(record.provenance.availability).toBe("direct");
     expect(record.errorMessage).toContain("Availability probe failed");
     expect(record.latencyMs).toBeNull();
+  });
+});
+
+describe("AI trend-summary preparation", () => {
+  it("uses aggregates and provenance while omitting endpoint URLs and raw measurement errors", () => {
+    const records = [measurement({ errorMessage: "private upstream detail", timestamp: 100 }), measurement({ id: "m-200", timestamp: 200 })];
+    const input = prepareTrendSummaryInput(endpoint, summarizeMeasurements(records), [], records.map(record => record.timestamp));
+    const serialized = JSON.stringify(input);
+    expect(input.provenance.direct).toBe(2);
+    expect(input.metrics.averageLatencyMs).toBe(20);
+    expect(serialized).not.toContain(endpoint.url);
+    expect(serialized).not.toContain("private upstream detail");
+  });
+
+  it("accepts only the expected structured summary schema", () => {
+    const parsed = parseTrendSummary(JSON.stringify({
+      headline: "Stable latency across the selected period",
+      narrative: "The selected observations show consistent direct latency values with no endpoint-local incident events recorded.",
+      highlights: [{ finding: "Latency remained stable", evidence: "Average latency was 20 ms across two direct records.", dataBoundary: "direct" }],
+      caveat: "These observations describe one endpoint from one monitor and do not establish broader internet conditions.",
+    }));
+    expect(parsed.highlights[0]?.dataBoundary).toBe("direct");
+    expect(() => parseTrendSummary('{"headline":"missing required fields"}')).toThrow();
   });
 });
