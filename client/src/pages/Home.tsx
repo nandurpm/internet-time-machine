@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import DashboardLayout from "@/components/DashboardLayout";
 import { trpc } from "@/lib/trpc";
+import { downloadDependencyTriageCsv, downloadDependencyTriagePdf } from "@/lib/dependencyTriageExport";
 import { downloadTrendSummaryBatchPdf, downloadTrendSummaryMarkdown, downloadTrendSummaryPdf, reorderTrendSummaryQueue, type TrendSummaryExportContext } from "@/lib/trendSummaryExport";
 import { useMemo, useState } from "react";
 import {
@@ -12,6 +13,7 @@ import {
   CartesianGrid,
   Line,
   LineChart,
+  Legend,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -23,6 +25,7 @@ import {
   ArrowDownToLine,
   ArrowDown,
   ArrowUp,
+  CheckCircle2,
   Clock3,
   Database,
   Download,
@@ -146,6 +149,22 @@ function ProvenanceBadge({
   );
 }
 
+function DependencyStatusBadge({ status }: { status: "review" | "remediated" }) {
+  const isReview = status === "review";
+  return (
+    <span
+      className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-extrabold ${
+        isReview
+          ? "border-amber-200 bg-amber-50 text-amber-800"
+          : "border-emerald-200 bg-emerald-50 text-emerald-800"
+      }`}
+    >
+      {isReview ? <AlertTriangle className="h-3.5 w-3.5" /> : <CheckCircle2 className="h-3.5 w-3.5" />}
+      {isReview ? "Recorded review status" : "Recorded remediated status"}
+    </span>
+  );
+}
+
 /**
  * All content in this page are only for example, replace with your own feature implementation
  * When building pages, remember your instructions in Frontend Workflow, Frontend Best Practices, Design Guide and Common Pitfalls
@@ -188,6 +207,7 @@ export default function Home() {
     return { from, to };
   }, [range, customFrom, customTo]);
   const endpointsQuery = trpc.monitoring.endpoints.useQuery();
+  const dependencyTriageQuery = trpc.monitoring.dependencyTriage.useQuery();
   const historyQuery = trpc.monitoring.history.useQuery({
     endpointId,
     from: dateRange.from,
@@ -296,6 +316,7 @@ export default function Home() {
             day: "numeric",
           }).format(Number(key) * 86_400_000)
         : key;
+  const triageCurrent = dependencyTriageQuery.data?.snapshots.at(-1);
 
   if (endpointsQuery.isLoading)
     return (
@@ -345,6 +366,121 @@ export default function Home() {
               <ProvenanceBadge kind="simulated" />
             </div>
           </div>
+        </section>
+
+        <section className="mt-6 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+          <div className="flex flex-col gap-4 border-b border-slate-100 bg-gradient-to-r from-emerald-50 via-white to-amber-50 px-5 py-5 sm:flex-row sm:items-start sm:justify-between">
+            <div className="flex gap-3">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-900 text-white shadow-lg shadow-slate-200">
+                <ShieldCheck className="h-5 w-5" />
+              </span>
+              <div>
+                <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-500">
+                  Dependency triage ledger
+                </p>
+                <h2 className="mt-1 text-xl font-extrabold tracking-tight text-slate-950">
+                  Recorded remediation progress and remaining review paths
+                </h2>
+                <p className="mt-1 max-w-3xl text-sm leading-6 text-slate-600">
+                  A source-backed record of production dependency audits and validated upgrade trials. It is not a live package scan and does not establish runtime exploitability.
+                </p>
+              </div>
+            </div>
+            {dependencyTriageQuery.data && (
+              <div className="flex flex-wrap items-center gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="rounded-lg border-slate-200 bg-white/80"
+                  onClick={() => downloadDependencyTriageCsv(dependencyTriageQuery.data!)}
+                >
+                  <Download className="mr-1.5 h-3.5 w-3.5" />
+                  Ledger CSV
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="rounded-lg border-slate-200 bg-white/80"
+                  onClick={() => void downloadDependencyTriagePdf(dependencyTriageQuery.data!)}
+                >
+                  <ArrowDownToLine className="mr-1.5 h-3.5 w-3.5" />
+                  Ledger PDF
+                </Button>
+                <DependencyStatusBadge status={dependencyTriageQuery.data.status} />
+              </div>
+            )}
+          </div>
+
+          {dependencyTriageQuery.isLoading ? (
+            <div className="grid gap-4 p-5 md:grid-cols-4">
+              {[0, 1, 2, 3].map(item => <div key={item} className="h-28 animate-pulse rounded-2xl bg-slate-100" />)}
+            </div>
+          ) : dependencyTriageQuery.isError ? (
+            <div className="m-5 rounded-xl border border-rose-200 bg-rose-50 p-4 text-sm text-rose-900">
+              <strong>Dependency-triage evidence is unavailable.</strong> The endpoint monitoring dashboard remains available; refresh to try loading the recorded audit ledger again.
+            </div>
+          ) : dependencyTriageQuery.data && triageCurrent ? (
+            <div className="p-5">
+              <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+                <MetricCard icon={ShieldCheck} label="Critical records" value={String(triageCurrent.critical)} detail="Recorded current production audit" tone="green" />
+                <MetricCard icon={AlertTriangle} label="High records" value={String(triageCurrent.high)} detail="Transitive parent-package review paths" tone="amber" />
+                <MetricCard icon={ArrowDown} label="Audit records reduced" value={`${dependencyTriageQuery.data.snapshots[0].total - triageCurrent.total}`} detail={`${dependencyTriageQuery.data.snapshots[0].total} baseline → ${triageCurrent.total} recorded current`} tone="green" />
+                <MetricCard icon={Database} label="Direct affected packages" value={String(triageCurrent.directPackages)} detail={`${triageCurrent.transitivePackages} remaining transitive records`} tone="slate" />
+              </div>
+
+              <div className="mt-6 grid gap-6 xl:grid-cols-[minmax(0,1fr)_360px]">
+                <div className="rounded-2xl border border-slate-200 bg-slate-50/70 p-5">
+                  <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+                    <div>
+                      <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-400">Historical audit evidence</p>
+                      <h3 className="mt-1 text-lg font-extrabold tracking-tight">Severity records across remediation checkpoints</h3>
+                    </div>
+                    <span className="text-xs font-semibold text-slate-500">Recorded {dateTime(new Date(triageCurrent.recordedAt).getTime())}</span>
+                  </div>
+                  <div className="mt-5 h-60">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <BarChart data={dependencyTriageQuery.data.snapshots} margin={{ left: -20, right: 8, top: 8, bottom: 0 }}>
+                        <CartesianGrid vertical={false} stroke="#E6EAF0" />
+                        <XAxis dataKey="label" tick={{ fontSize: 10, fill: "#64748B" }} axisLine={false} tickLine={false} />
+                        <YAxis allowDecimals={false} tick={{ fontSize: 11, fill: "#64748B" }} axisLine={false} tickLine={false} />
+                        <Tooltip contentStyle={{ borderRadius: 14, border: "1px solid #E2E8F0", boxShadow: "0 12px 28px rgba(15,23,42,.12)" }} />
+                        <Bar dataKey="critical" name="Critical" stackId="severity" fill="#E11D48" radius={[4, 4, 0, 0]} />
+                        <Bar dataKey="high" name="High" stackId="severity" fill="#F59E0B" />
+                        <Bar dataKey="moderate" name="Moderate" stackId="severity" fill="#38BDF8" />
+                        <Bar dataKey="low" name="Low" stackId="severity" fill="#94A3B8" />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
+                </div>
+
+                <aside className="rounded-2xl border border-amber-100 bg-amber-50/60 p-5">
+                  <p className="text-xs font-bold uppercase tracking-[0.14em] text-amber-800">
+                    {dependencyTriageQuery.data.residualPaths.length ? "Recorded high review paths" : "Current recorded status"}
+                  </p>
+                  <div className="mt-4 space-y-4">
+                    {dependencyTriageQuery.data.residualPaths.length ? dependencyTriageQuery.data.residualPaths.map(path => (
+                      <div key={path.parent} className="rounded-xl border border-amber-100 bg-white/80 p-4">
+                        <div className="flex items-center justify-between gap-3">
+                          <p className="font-extrabold text-slate-900">{path.parent} {path.currentVersion}</p>
+                          <span className="rounded-full bg-amber-100 px-2.5 py-1 text-[11px] font-extrabold uppercase text-amber-800">{path.severity}</span>
+                        </div>
+                        <p className="mt-1 text-xs font-semibold text-slate-500">Transitive package: {path.packageName}</p>
+                        <p className="mt-3 text-sm leading-5 text-slate-700">{path.nextAction}</p>
+                      </div>
+                    )) : (
+                      <div className="rounded-xl border border-emerald-100 bg-emerald-50/80 p-4 text-sm leading-5 text-emerald-900">
+                        The latest recorded production audit has no critical, high, moderate, or low advisory records. The next validated aggregate refresh will preserve a dated checkpoint rather than replacing this evidence.
+                      </div>
+                    )}
+                  </div>
+                </aside>
+              </div>
+
+              <div className="mt-5 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600">
+                <strong className="text-slate-800">Interpretation boundary.</strong> {dependencyTriageQuery.data.interpretation} Source: {dependencyTriageQuery.data.source}. Refresh cadence: {dependencyTriageQuery.data.refreshCadence ?? "Recorded evidence only"}.
+              </div>
+            </div>
+          ) : null}
         </section>
 
         <div className="mt-6 flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm lg:flex-row lg:items-center lg:justify-between">
@@ -566,7 +702,7 @@ export default function Home() {
                     </Button>
                   </div>
                 </div>
-                <div className="mt-6 h-72">
+                <div className="mt-6 h-72" data-testid="performance-timeline-chart">
                   {points.length ? (
                     <ResponsiveContainer width="100%" height="100%">
                       <LineChart
@@ -593,6 +729,11 @@ export default function Home() {
                             border: "1px solid #E2E8F0",
                             boxShadow: "0 12px 28px rgba(15,23,42,.12)",
                           }}
+                        />
+                        <Legend
+                          verticalAlign="top"
+                          align="right"
+                          wrapperStyle={{ fontSize: 12, paddingBottom: 8 }}
                         />
                         <Line
                           type="monotone"

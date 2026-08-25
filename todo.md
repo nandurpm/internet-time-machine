@@ -41,3 +41,24 @@
 - [x] Add accessible drag-and-drop reordering to the session-only batch-PDF queue.
 - [x] Restore an explicit accessible label for each batch-queue selection checkbox after adding draggable queue rows.
 - [x] Document verification of the custom live domain and add it to hosted-link guidance.
+- [x] Audit all 25 archive repositories for reproducible build, test, production-start, and working-tree defects; apply and validate targeted corrections.
+- [x] Verify all 26 repositories are portfolio-linked, live where intended, free of committed credentials, and covered by a consolidated fixes-and-improvements report.
+- [x] Run a deeper 26-repository code-quality and vulnerability assessment, create an executive stakeholder presentation, and configure a confirmed weekly hosted-link health check.
+- [x] Configure the selected weekly in-Manus health and uptime report for the 25 hosted portfolio links.
+- [x] Adopt the isolated-worktree-tested compatible tRPC, Axios, and AWS SDK dependency updates, then rerun the production audit and validation suite.
+- [x] Plan and regression-test breaking-change upgrades for the remaining dependency-review paths, including Drizzle ORM, Nano ID, Streamdown, Recharts, and Express.
+- [x] Draft an evidence-based Recharts v3 and Express v5 migration plan, including the observed compatibility blockers, staged remediation steps, validation gates, rollback criteria, and ownership.
+- [x] Enhance the existing weekly in-Manus portfolio health report with per-link response-time metrics, aggregate latency statistics, and clear visual health-status indicators for all 25 hosted applications.
+- [x] Add a responsive Internet Time Machine dependency-triage dashboard backed by documented audit evidence, with current severity status, historical remediation comparison, residual dependency paths, and interpretation safeguards.
+- [x] Add automated coverage for dependency-triage data shaping and validate the new dashboard, updated report configuration, migration plan, and published application.
+- [x] Save and publish the dependency-triage dashboard and weekly-report enhancement, then verify the live Internet Time Machine application loads the new panel without errors.
+- [x] Add focused Express v5 route-stability tests for the storage proxy, including named-wildcard key reconstruction, nested paths, missing keys, backend failures, and safe redirect behavior.
+- [x] Refactor the shared Recharts chart wrapper for v3-compatible tooltip and legend payload types, preserving current dashboard chart rendering and accessibility behavior.
+- [x] Add on-demand CSV and PDF downloads for the recorded dependency-triage ledger without representing the evidence as a real-time scan.
+- [x] Validate the Express v5 worktree trial, Recharts v3 worktree trial, export data shaping, production build/start, and live dashboard release.
+- [x] Adopt the validated Express v5 and Recharts v3 package upgrades with named wildcard fallback routes, then validate route behavior and production startup.
+- [x] Add browser-level chart interaction coverage for Recharts v3 tooltips, legends, and keyboard-accessible chart behavior.
+- [x] Add a persisted, dated dependency-audit refresh ledger with strict evidence boundaries, an authenticated refresh intake, and clear current-versus-historical status.
+- [x] Configure and verify a weekly agent-assisted audit-refresh workflow that submits only validated aggregate audit data to the published ledger.
+- [ ] Run the complete upgraded test, build, start, browser, and live-release verification cycle.
+- [ ] Safely exercise or observe the authenticated dependency-audit refresh callback after deployment and verify that the published ledger receives a dated aggregate snapshot.

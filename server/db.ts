@@ -1,6 +1,6 @@
-import { eq } from "drizzle-orm";
+import { and, desc, eq, gte, lt } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users } from "../drizzle/schema";
+import { dependencyAuditSnapshots, InsertDependencyAuditSnapshot, InsertUser, users } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -87,6 +87,33 @@ export async function getUserByOpenId(openId: string) {
   const result = await db.select().from(users).where(eq(users.openId, openId)).limit(1);
 
   return result.length > 0 ? result[0] : undefined;
+}
+
+export type DependencyAuditRefreshInput = Omit<InsertDependencyAuditSnapshot, "id" | "createdAt" | "recordedAt">;
+
+export async function listDependencyAuditSnapshots() {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(dependencyAuditSnapshots).orderBy(desc(dependencyAuditSnapshots.recordedAt));
+}
+
+export async function recordDependencyAuditSnapshot(input: DependencyAuditRefreshInput, recordedAt = new Date()) {
+  const db = await getDb();
+  if (!db) throw new Error("Dependency-audit persistence is unavailable.");
+
+  const startOfDay = new Date(Date.UTC(recordedAt.getUTCFullYear(), recordedAt.getUTCMonth(), recordedAt.getUTCDate()));
+  const nextDay = new Date(startOfDay.getTime() + 86_400_000);
+  const existing = await db.select().from(dependencyAuditSnapshots)
+    .where(and(gte(dependencyAuditSnapshots.recordedAt, startOfDay), lt(dependencyAuditSnapshots.recordedAt, nextDay)))
+    .limit(1);
+  if (existing[0]) return { snapshot: existing[0], inserted: false };
+
+  await db.insert(dependencyAuditSnapshots).values({ ...input, recordedAt });
+  const [snapshot] = await db.select().from(dependencyAuditSnapshots)
+    .where(eq(dependencyAuditSnapshots.recordedAt, recordedAt))
+    .limit(1);
+  if (!snapshot) throw new Error("Dependency-audit snapshot could not be read after recording.");
+  return { snapshot, inserted: true };
 }
 
 // TODO: add feature queries here as your schema grows.

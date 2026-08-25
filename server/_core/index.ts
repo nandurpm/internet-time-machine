@@ -7,6 +7,7 @@ import { registerOAuthRoutes } from "./oauth";
 import { registerStorageProxy } from "./storageProxy";
 import { appRouter } from "../routers";
 import { handleScheduledMeasurement } from "../monitoring/scheduledHandler";
+import { handleScheduledDependencyAuditRefresh } from "../dependencyAuditRefreshHandler";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
 
@@ -38,6 +39,7 @@ async function startServer() {
   registerStorageProxy(app);
   registerOAuthRoutes(app);
   app.post("/api/scheduled/collect-monitoring", handleScheduledMeasurement);
+  app.post("/api/scheduled/dependency-audit-refresh", handleScheduledDependencyAuditRefresh);
   // tRPC API
   app.use(
     "/api/trpc",
