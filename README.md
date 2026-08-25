@@ -86,3 +86,42 @@ Configured endpoint addresses, resulting metadata, and error messages can be sen
 ## License and changes
 
 This project is distributed under the [MIT License](LICENSE). Release notes are maintained in [`CHANGELOG.md`](CHANGELOG.md).
+
+<!-- clear-use-guide -->
+## Clear use guide
+
+### Install
+
+Use Node.js 22 or newer, clone this repository, and install its dependencies:
+
+```bash
+git clone https://github.com/nandurpm/internet-time-machine.git
+cd internet-time-machine
+pnpm install
+```
+
+### Open it locally
+
+Start the local web/report server:
+
+```bash
+pnpm start
+```
+
+Then open the URL printed by the terminal. The production report hosts use http://localhost:4080 unless a different PORT value is set. To choose another port, use PORT=5050 pnpm start on Linux/macOS or set PORT=5050 && pnpm start in Windows Command Prompt.
+
+
+### Use the hosted version
+
+**Live URL:** [https://timemachine-alxsadqu.manus.space](https://timemachine-alxsadqu.manus.space)
+
+The hosted version is a browser-friendly report or application view. Use the local workflow when you need the full device- or browser-specific capabilities.
+
+### Windows and Linux
+
+The same Node.js commands work in Windows PowerShell, Windows Command Prompt, and a Linux terminal. Use the platform-specific port command above only when you need a non-default local port.
+
+### Important scope
+
+This project follows its existing local-first and read-only boundaries. Demo/report content is generated or supplied through the documented local workflow; a hosted page does not provide hidden access to your device, private files, hardware, accounts, or network.
+
