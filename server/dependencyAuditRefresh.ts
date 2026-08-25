@@ -27,6 +27,7 @@ function asSnapshot(record: Awaited<ReturnType<typeof listDependencyAuditSnapsho
   return {
     label: `Weekly audit · ${record.recordedAt.toISOString().slice(0, 10)}`,
     recordedAt: record.recordedAt.toISOString(),
+    refreshedAt: record.refreshedAt.toISOString(),
     total: record.total,
     critical: record.critical,
     high: record.high,

@@ -1,0 +1,1 @@
+ALTER TABLE `dependency_audit_snapshots` ADD `refreshedAt` timestamp DEFAULT (now()) NOT NULL ON UPDATE CURRENT_TIMESTAMP;

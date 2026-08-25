@@ -12,6 +12,7 @@ vi.mock("./dependencyAuditRefresh", () => ({
 import { recordValidatedDependencyAudit } from "./dependencyAuditRefresh";
 import { handleScheduledDependencyAuditRefresh } from "./dependencyAuditRefreshHandler";
 import { sdk } from "./_core/sdk";
+import { ForbiddenError } from "../shared/_core/errors";
 
 const body = {
   total: 0,
@@ -60,6 +61,17 @@ describe("handleScheduledDependencyAuditRefresh", () => {
 
     expect(res.status).toHaveBeenCalledWith(403);
     expect(res.json).toHaveBeenCalledWith({ error: "cron-only" });
+    expect(recordValidatedDependencyAudit).not.toHaveBeenCalled();
+  });
+
+  it("returns a forbidden response for an invalid scheduled callback session", async () => {
+    vi.mocked(sdk.authenticateRequest).mockRejectedValue(ForbiddenError("Invalid session cookie"));
+    const res = response();
+
+    await handleScheduledDependencyAuditRefresh({ body } as Request, res);
+
+    expect(res.status).toHaveBeenCalledWith(403);
+    expect(res.json).toHaveBeenCalledWith({ error: "Invalid session cookie" });
     expect(recordValidatedDependencyAudit).not.toHaveBeenCalled();
   });
 });

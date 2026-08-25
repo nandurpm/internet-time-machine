@@ -435,7 +435,7 @@ export default function Home() {
                       <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-400">Historical audit evidence</p>
                       <h3 className="mt-1 text-lg font-extrabold tracking-tight">Severity records across remediation checkpoints</h3>
                     </div>
-                    <span className="text-xs font-semibold text-slate-500">Recorded {dateTime(new Date(triageCurrent.recordedAt).getTime())}</span>
+                    <span className="text-xs font-semibold text-slate-500">Last validated {dateTime(new Date(triageCurrent.refreshedAt ?? triageCurrent.recordedAt).getTime())}</span>
                   </div>
                   <div className="mt-5 h-60">
                     <ResponsiveContainer width="100%" height="100%">

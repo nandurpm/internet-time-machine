@@ -4,6 +4,7 @@ export type DependencyHealth = "review" | "remediated";
 export type DependencyAuditSnapshot = {
   label: string;
   recordedAt: string;
+  refreshedAt?: string;
   total: number;
   critical: number;
   high: number;

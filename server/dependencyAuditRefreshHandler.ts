@@ -1,4 +1,5 @@
 import type { Request, Response } from "express";
+import { HttpError } from "../shared/_core/errors";
 import { sdk } from "./_core/sdk";
 import { recordValidatedDependencyAudit } from "./dependencyAuditRefresh";
 
@@ -10,6 +11,9 @@ export async function handleScheduledDependencyAuditRefresh(req: Request, res: R
     const result = await recordValidatedDependencyAudit(req.body);
     return res.json({ ok: true, inserted: result.inserted, recordedAt: result.snapshot.recordedAt });
   } catch (error) {
+    if (error instanceof HttpError) {
+      return res.status(error.statusCode).json({ error: error.message });
+    }
     const message = error instanceof Error ? error.message : String(error);
     return res.status(500).json({
       error: message,

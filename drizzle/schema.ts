@@ -35,6 +35,7 @@ export const dependencyAuditSnapshots = mysqlTable("dependency_audit_snapshots",
   transitivePackages: int("transitivePackages").notNull(),
   source: varchar("source", { length: 255 }).notNull(),
   note: text("note").notNull(),
+  refreshedAt: timestamp("refreshedAt").defaultNow().onUpdateNow().notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
 });
 

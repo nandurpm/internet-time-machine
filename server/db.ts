@@ -106,9 +106,18 @@ export async function recordDependencyAuditSnapshot(input: DependencyAuditRefres
   const existing = await db.select().from(dependencyAuditSnapshots)
     .where(and(gte(dependencyAuditSnapshots.recordedAt, startOfDay), lt(dependencyAuditSnapshots.recordedAt, nextDay)))
     .limit(1);
-  if (existing[0]) return { snapshot: existing[0], inserted: false };
+  if (existing[0]) {
+    await db.update(dependencyAuditSnapshots)
+      .set({ ...input, refreshedAt: new Date() })
+      .where(eq(dependencyAuditSnapshots.id, existing[0].id));
+    const [snapshot] = await db.select().from(dependencyAuditSnapshots)
+      .where(eq(dependencyAuditSnapshots.id, existing[0].id))
+      .limit(1);
+    if (!snapshot) throw new Error("Dependency-audit snapshot could not be read after refreshing.");
+    return { snapshot, inserted: false };
+  }
 
-  await db.insert(dependencyAuditSnapshots).values({ ...input, recordedAt });
+  await db.insert(dependencyAuditSnapshots).values({ ...input, recordedAt, refreshedAt: new Date() });
   const [snapshot] = await db.select().from(dependencyAuditSnapshots)
     .where(eq(dependencyAuditSnapshots.recordedAt, recordedAt))
     .limit(1);
