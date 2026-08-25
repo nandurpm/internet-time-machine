@@ -1,6 +1,13 @@
 import { and, desc, eq, gte, lt } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { dependencyAuditSnapshots, InsertDependencyAuditSnapshot, InsertUser, users } from "../drizzle/schema";
+import {
+  dependencyAuditSnapshots,
+  InsertDependencyAuditSnapshot,
+  InsertUser,
+  portfolioValidationResults,
+  portfolioValidationRuns,
+  users,
+} from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -123,6 +130,69 @@ export async function recordDependencyAuditSnapshot(input: DependencyAuditRefres
     .limit(1);
   if (!snapshot) throw new Error("Dependency-audit snapshot could not be read after recording.");
   return { snapshot, inserted: true };
+}
+
+export type PortfolioValidationRunInput = {
+  taskUid: string;
+  healthyCount: number;
+  degradedCount: number;
+  unavailableCount: number;
+  checkedLinkCount: number;
+  meanResponseMs: number | null;
+  medianResponseMs: number | null;
+  slowestResponseMs: number | null;
+  source: string;
+  note: string;
+  results: Array<{
+    application: string;
+    url: string;
+    status: "healthy" | "degraded" | "unavailable";
+    httpStatus: number | null;
+    responseTimeMs: number | null;
+    attemptCount: number;
+    pageTitle: string | null;
+  }>;
+};
+
+export async function recordPortfolioValidationRun(input: PortfolioValidationRunInput, recordedAt = new Date()) {
+  const db = await getDb();
+  if (!db) throw new Error("Portfolio validation persistence is unavailable.");
+
+  const normalizedRecordedAt = new Date(Math.floor(recordedAt.getTime() / 1_000) * 1_000);
+  await db.insert(portfolioValidationRuns).values({
+    taskUid: input.taskUid,
+    recordedAt: normalizedRecordedAt,
+    healthyCount: input.healthyCount,
+    degradedCount: input.degradedCount,
+    unavailableCount: input.unavailableCount,
+    checkedLinkCount: input.checkedLinkCount,
+    meanResponseMs: input.meanResponseMs,
+    medianResponseMs: input.medianResponseMs,
+    slowestResponseMs: input.slowestResponseMs,
+    source: input.source,
+    note: input.note,
+  });
+  const [run] = await db.select().from(portfolioValidationRuns)
+    .where(and(eq(portfolioValidationRuns.taskUid, input.taskUid), eq(portfolioValidationRuns.recordedAt, normalizedRecordedAt)))
+    .limit(1);
+  if (!run) throw new Error("Portfolio validation run could not be read after recording.");
+
+  await db.insert(portfolioValidationResults).values(input.results.map(result => ({ ...result, runId: run.id })));
+  return run;
+}
+
+export async function listPortfolioValidationRuns(limit = 12) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(portfolioValidationRuns).orderBy(desc(portfolioValidationRuns.recordedAt)).limit(limit);
+}
+
+export async function listPortfolioValidationResults(runId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(portfolioValidationResults)
+    .where(eq(portfolioValidationResults.runId, runId))
+    .orderBy(portfolioValidationResults.application);
 }
 
 // TODO: add feature queries here as your schema grows.

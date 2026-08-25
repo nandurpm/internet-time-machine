@@ -60,5 +60,13 @@
 - [x] Add browser-level chart interaction coverage for Recharts v3 tooltips, legends, and keyboard-accessible chart behavior.
 - [x] Add a persisted, dated dependency-audit refresh ledger with strict evidence boundaries, an authenticated refresh intake, and clear current-versus-historical status.
 - [x] Configure and verify a weekly agent-assisted audit-refresh workflow that submits only validated aggregate audit data to the published ledger.
-- [ ] Run the complete upgraded test, build, start, browser, and live-release verification cycle.
-- [ ] Safely exercise or observe the authenticated dependency-audit refresh callback after deployment and verify that the published ledger receives a dated aggregate snapshot.
+- [x] Run the complete upgraded test, build, start, browser, and live-release verification cycle.
+- [x] Safely exercise or observe the authenticated dependency-audit refresh callback after deployment and verify that the published ledger receives a dated aggregate snapshot.
+- [x] Re-run type, unit, production-build, browser-chart, production-start, and live-ledger verification after the refreshed-at schema and presentation update.
+- [x] Persist privacy-safe weekly portfolio validation runs and read-only report summaries for historical viewing.
+- [x] Add an admin-only audit-run history view with validated aggregate evidence and no raw audit output or credentials.
+- [x] Add dashboard alert notifications for confirmed unavailable portfolio links while distinguishing retry-only degraded links.
+- [x] Add a read-only weekly-report archive section with accessible summaries and status filters.
+- [x] Test authorization, data validation, scheduled persistence, dashboard states, and final published behavior for the portfolio-health enhancements.
+- [ ] Observe a successful controlled scheduled run that persists one real weekly portfolio validation summary and its 25 related per-link outcomes.
+- [ ] Re-verify live alerts, archive filters, and the administrator-only run history against a real persisted weekly report while retaining the non-admin denial boundary.

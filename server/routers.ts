@@ -4,8 +4,9 @@ import { z } from "zod";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { createHeartbeatJob, updateHeartbeatJob } from "./_core/heartbeat";
 import { systemRouter } from "./_core/systemRouter";
-import { protectedProcedure, publicProcedure, router } from "./_core/trpc";
+import { adminProcedure, protectedProcedure, publicProcedure, router } from "./_core/trpc";
 import { getDependencyTriage } from "./dependencyTriage";
+import { getAdminPortfolioRunHistory, getPortfolioReportArchive } from "./portfolioReports";
 import { intervalToSafeCron } from "./monitoring/config";
 import { collectMeasurement, createEndpointProfile, getHistory, listEndpointProfiles, updateEndpointSchedule } from "./monitoring/service";
 import { generateTrendSummary, prepareTrendSummaryInput } from "./monitoring/trendSummary";
@@ -43,6 +44,8 @@ export const appRouter = router({
   monitoring: router({
     endpoints: publicProcedure.query(() => listEndpointProfiles()),
     dependencyTriage: publicProcedure.query(() => getDependencyTriage()),
+    portfolioReportArchive: publicProcedure.query(() => getPortfolioReportArchive()),
+    adminPortfolioRunHistory: adminProcedure.query(() => getAdminPortfolioRunHistory()),
     history: publicProcedure.input(historyInput).query(({ input }) => getHistory(input.endpointId, input.from, input.to)),
     trendSummary: protectedProcedure.input(historyInput).mutation(async ({ input }) => {
       const endpoint = listEndpointProfiles().find(profile => profile.id === input.endpointId);

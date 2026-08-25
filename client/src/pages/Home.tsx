@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import DashboardLayout from "@/components/DashboardLayout";
+import PortfolioReportPanels from "@/components/PortfolioReportPanels";
 import { trpc } from "@/lib/trpc";
 import { downloadDependencyTriageCsv, downloadDependencyTriagePdf } from "@/lib/dependencyTriageExport";
 import { downloadTrendSummaryBatchPdf, downloadTrendSummaryMarkdown, downloadTrendSummaryPdf, reorderTrendSummaryQueue, type TrendSummaryExportContext } from "@/lib/trendSummaryExport";
@@ -482,6 +483,8 @@ export default function Home() {
             </div>
           ) : null}
         </section>
+
+        <PortfolioReportPanels />
 
         <div className="mt-6 flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm lg:flex-row lg:items-center lg:justify-between">
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
