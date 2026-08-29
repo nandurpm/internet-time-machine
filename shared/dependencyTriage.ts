@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: dependencyTriage.ts
+ * PURPOSE: Defines normalized dependency-audit, triage, evidence, and remediation types shared by API and client reporting.
+ * ============================================================
+ */
+
 export type DependencySeverity = "critical" | "high" | "moderate" | "low";
 export type DependencyHealth = "review" | "remediated";
 

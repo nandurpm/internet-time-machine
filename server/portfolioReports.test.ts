@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: portfolioReports.test.ts
+ * PURPOSE: Verifies the portfolio reports.test server behavior, authorization, persistence, and response contract.
+ * ============================================================
+ */
+
 import { describe, expect, it } from "vitest";
 import { portfolioLinks, portfolioValidationReportInput } from "./portfolioReports";
 

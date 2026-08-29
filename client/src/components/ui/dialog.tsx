@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: dialog.tsx
+ * PURPOSE: Provides the reusable dialog UI primitive and styling contract used by the React client.
+ * ============================================================
+ */
+
 import { cn } from "@/lib/utils";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { XIcon } from "lucide-react";
@@ -206,4 +213,3 @@ export {
   DialogTitle,
   DialogTrigger
 };
-

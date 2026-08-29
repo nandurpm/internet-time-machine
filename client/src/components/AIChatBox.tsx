@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: AIChatBox.tsx
+ * PURPOSE: Renders the optional AI chat interface and coordinates streamed user/model conversation state.
+ * ============================================================
+ */
+
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { ScrollArea } from "@/components/ui/scroll-area";

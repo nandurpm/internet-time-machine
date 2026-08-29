@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: db.ts
+ * PURPOSE: Creates the Drizzle database client and centralizes access to the configured application database.
+ * ============================================================
+ */
+
 import { and, desc, eq, gte, lt } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 import {

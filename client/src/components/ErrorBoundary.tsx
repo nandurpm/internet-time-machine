@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: ErrorBoundary.tsx
+ * PURPOSE: Catches uncaught React rendering failures and presents a recoverable application error state.
+ * ============================================================
+ */
+
 import { cn } from "@/lib/utils";
 import { AlertTriangle, RotateCcw } from "lucide-react";
 import { Component, ReactNode } from "react";

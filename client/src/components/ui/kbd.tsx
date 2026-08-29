@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: kbd.tsx
+ * PURPOSE: Provides the reusable kbd UI primitive and styling contract used by the React client.
+ * ============================================================
+ */
+
 import { cn } from "@/lib/utils";
 
 function Kbd({ className, ...props }: React.ComponentProps<"kbd">) {

@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: alert-dialog.tsx
+ * PURPOSE: Provides the reusable alert dialog UI primitive and styling contract used by the React client.
+ * ============================================================
+ */
+
 import * as React from "react";
 import * as AlertDialogPrimitive from "@radix-ui/react-alert-dialog";
 

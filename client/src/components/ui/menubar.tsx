@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: menubar.tsx
+ * PURPOSE: Provides the reusable menubar UI primitive and styling contract used by the React client.
+ * ============================================================
+ */
+
 import * as React from "react";
 import * as MenubarPrimitive from "@radix-ui/react-menubar";
 import { CheckIcon, ChevronRightIcon, CircleIcon } from "lucide-react";

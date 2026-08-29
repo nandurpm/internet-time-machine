@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: trendSummary.ts
+ * PURPOSE: Minimizes monitoring aggregates, validates structured model output, and generates user-triggered AI trend summaries.
+ * ============================================================
+ */
+
 import { z } from "zod";
 import { invokeLLM, listLLMModels } from "../_core/llm";
 import type { EndpointProfile, MonitoringStatistics, OutageEvent } from "./types";

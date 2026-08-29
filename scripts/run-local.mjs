@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: run-local.mjs
+ * PURPOSE: Normalizes local launcher arguments and starts the appropriate Internet Time Machine command or development server.
+ * ============================================================
+ */
+
 import { spawn } from "node:child_process";
 
 const mode = process.argv[2] ?? "dev";

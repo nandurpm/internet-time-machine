@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: context-menu.tsx
+ * PURPOSE: Provides the reusable context menu UI primitive and styling contract used by the React client.
+ * ============================================================
+ */
+
 import * as React from "react";
 import * as ContextMenuPrimitive from "@radix-ui/react-context-menu";
 import { CheckIcon, ChevronRightIcon, CircleIcon } from "lucide-react";

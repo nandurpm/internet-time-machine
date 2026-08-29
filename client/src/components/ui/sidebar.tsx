@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: sidebar.tsx
+ * PURPOSE: Provides the reusable sidebar UI primitive and styling contract used by the React client.
+ * ============================================================
+ */
+
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -731,4 +738,3 @@ export {
   SidebarTrigger,
   useSidebar
 };
-

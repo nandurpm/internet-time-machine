@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: config.ts
+ * PURPOSE: Validates endpoint profiles, enforces conservative collection intervals, and converts supported intervals to scheduler expressions.
+ * ============================================================
+ */
+
 import { z } from "zod";
 import type { EndpointProfile } from "./types";
 

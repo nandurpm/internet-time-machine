@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: sheet.tsx
+ * PURPOSE: Provides the reusable sheet UI primitive and styling contract used by the React client.
+ * ============================================================
+ */
+
 "use client";
 
 import * as React from "react";

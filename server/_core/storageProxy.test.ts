@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: storageProxy.test.ts
+ * PURPOSE: Verifies object-storage proxy validation, permissions, and error handling.
+ * ============================================================
+ */
+
 import express, { type Express } from "express";
 import type { Server } from "node:http";
 import { once } from "node:events";

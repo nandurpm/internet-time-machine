@@ -1,3 +1,8 @@
+-- ============================================================
+-- FILE: 0000_rainy_starbolt.sql
+-- PURPOSE: Applies the 0000_rainy_starbolt Drizzle migration to evolve the application's persisted monitoring, authentication, or reporting schema.
+-- ============================================================
+
 CREATE TABLE `users` (
 	`id` int AUTO_INCREMENT NOT NULL,
 	`openId` varchar(64) NOT NULL,

@@ -1,3 +1,8 @@
+# ============================================================
+# FILE: webpack.yml
+# PURPOSE: Runs a legacy npm/Webpack build matrix retained for repository history; the current project uses pnpm, Vite, and esbuild.
+# ============================================================
+
 name: NodeJS with Webpack
 
 on:

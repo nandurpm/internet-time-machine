@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: playwright.config.ts
+ * PURPOSE: Configures browser tests, local web-server startup, tracing, screenshots, and supported browser projects.
+ * ============================================================
+ */
+
 import { defineConfig } from "@playwright/test";
 
 export default defineConfig({

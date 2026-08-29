@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: drizzle.config.ts
+ * PURPOSE: Configures Drizzle migration generation and database connection input.
+ * ============================================================
+ */
+
 import { defineConfig } from "drizzle-kit";
 
 const connectionString = process.env.DATABASE_URL;

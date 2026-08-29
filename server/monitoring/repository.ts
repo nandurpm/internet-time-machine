@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: repository.ts
+ * PURPOSE: Defines monitoring persistence contracts and memory/SQLite repository implementations for profiles, measurements, and incidents.
+ * ============================================================
+ */
+
 import { mkdirSync } from "node:fs";
 import { createRequire } from "node:module";
 import { dirname } from "node:path";

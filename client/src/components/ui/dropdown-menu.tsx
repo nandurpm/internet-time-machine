@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: dropdown-menu.tsx
+ * PURPOSE: Provides the reusable dropdown menu UI primitive and styling contract used by the React client.
+ * ============================================================
+ */
+
 import * as React from "react";
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
 import { CheckIcon, ChevronRightIcon, CircleIcon } from "lucide-react";

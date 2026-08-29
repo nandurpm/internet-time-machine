@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: statistics.ts
+ * PURPOSE: Calculates provenance-aware metric summaries and time-bucketed monitoring history.
+ * ============================================================
+ */
+
 import type { Measurement, MetricName, MetricSummary, MonitoringStatistics } from "./types";
 
 const numericMetrics: Exclude<MetricName, "availability">[] = [

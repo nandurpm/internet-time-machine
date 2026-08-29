@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: demo.ts
+ * PURPOSE: Seeds explicitly labeled simulated endpoint measurements and incidents for interface demonstrations.
+ * ============================================================
+ */
+
 import type { MonitoringRepository } from "./repository";
 import { detectEndpointOutages } from "./outages";
 import type { EndpointProfile, Measurement } from "./types";

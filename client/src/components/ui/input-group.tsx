@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: input-group.tsx
+ * PURPOSE: Provides the reusable input group UI primitive and styling contract used by the React client.
+ * ============================================================
+ */
+
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 

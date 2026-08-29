@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: command.tsx
+ * PURPOSE: Provides the reusable command UI primitive and styling contract used by the React client.
+ * ============================================================
+ */
+
 "use client";
 
 import * as React from "react";

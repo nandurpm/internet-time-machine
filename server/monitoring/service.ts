@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: service.ts
+ * PURPOSE: Coordinates endpoint CRUD, collection, history, incidents, and scheduler state across monitoring adapters and repositories.
+ * ============================================================
+ */
+
 import { randomUUID } from "node:crypto";
 import { resolve } from "node:path";
 import { validateEndpointInput } from "./config";

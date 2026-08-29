@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: resizable.tsx
+ * PURPOSE: Provides the reusable resizable UI primitive and styling contract used by the React client.
+ * ============================================================
+ */
+
 import * as React from "react";
 import { GripVerticalIcon } from "lucide-react";
 import * as ResizablePrimitive from "react-resizable-panels";

@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: context.ts
+ * PURPOSE: Builds per-request tRPC context, authentication state, and request metadata.
+ * ============================================================
+ */
+
 import type { CreateExpressContextOptions } from "@trpc/server/adapters/express";
 import type { User } from "../../drizzle/schema";
 import { sdk } from "./sdk";

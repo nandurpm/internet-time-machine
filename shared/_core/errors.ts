@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: errors.ts
+ * PURPOSE: Defines serializable shared error types and helpers used across the client/server boundary.
+ * ============================================================
+ */
+
 /**
  * Base HTTP error class with status code.
  * Throw this from route handlers to send specific HTTP errors.

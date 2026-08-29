@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: empty.tsx
+ * PURPOSE: Provides the reusable empty UI primitive and styling contract used by the React client.
+ * ============================================================
+ */
+
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";

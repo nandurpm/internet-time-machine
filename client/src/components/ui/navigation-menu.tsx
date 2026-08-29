@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: navigation-menu.tsx
+ * PURPOSE: Provides the reusable navigation menu UI primitive and styling contract used by the React client.
+ * ============================================================
+ */
+
 import * as React from "react";
 import * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu";
 import { cva } from "class-variance-authority";

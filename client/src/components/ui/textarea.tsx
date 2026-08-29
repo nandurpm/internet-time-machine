@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: textarea.tsx
+ * PURPOSE: Provides the reusable textarea UI primitive and styling contract used by the React client.
+ * ============================================================
+ */
+
 import { useDialogComposition } from "@/components/ui/dialog";
 import { useComposition } from "@/hooks/useComposition";
 import { cn } from "@/lib/utils";

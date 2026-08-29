@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: Map.tsx
+ * PURPOSE: Wraps the map integration and displays configured geographic markers through a reusable React component.
+ * ============================================================
+ */
+
 /**
  * GOOGLE MAPS FRONTEND INTEGRATION - ESSENTIAL GUIDE
  *

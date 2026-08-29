@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: index.ts
+ * PURPOSE: Creates the Express server, mounts tRPC and scheduler routes, serves the client, and starts the application runtime.
+ * ============================================================
+ */
+
 import "dotenv/config";
 import express from "express";
 import { createServer } from "http";

@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: spinner.tsx
+ * PURPOSE: Provides the reusable spinner UI primitive and styling contract used by the React client.
+ * ============================================================
+ */
+
 import { Loader2Icon } from "lucide-react";
 
 import { cn } from "@/lib/utils";

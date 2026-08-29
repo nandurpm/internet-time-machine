@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: dependencyAuditRefresh.test.ts
+ * PURPOSE: Verifies the dependency audit refresh.test server behavior, authorization, persistence, and response contract.
+ * ============================================================
+ */
+
 import { describe, expect, it } from "vitest";
 import { dependencyAuditRefreshInput } from "./dependencyAuditRefresh";
 

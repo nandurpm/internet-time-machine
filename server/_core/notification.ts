@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: notification.ts
+ * PURPOSE: Sends authenticated platform notifications through the hosted notification integration.
+ * ============================================================
+ */
+
 import { TRPCError } from "@trpc/server";
 import { ENV } from "./env";
 

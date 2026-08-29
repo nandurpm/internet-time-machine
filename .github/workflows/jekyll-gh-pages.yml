@@ -1,3 +1,8 @@
+# ============================================================
+# FILE: jekyll-gh-pages.yml
+# PURPOSE: Runs a legacy Jekyll GitHub Pages deployment that does not include the application's Node server, authenticated API, scheduler, or SQLite runtime.
+# ============================================================
+
 # Sample workflow for building and deploying a Jekyll site to GitHub Pages
 name: Deploy Jekyll with GitHub Pages dependencies preinstalled
 

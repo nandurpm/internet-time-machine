@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: DashboardLayout.tsx
+ * PURPOSE: Provides the authenticated dashboard shell, navigation, account controls, and responsive page layout.
+ * ============================================================
+ */
+
 import { useAuth } from "@/_core/hooks/useAuth";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {

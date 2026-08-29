@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: sonner.tsx
+ * PURPOSE: Provides the reusable sonner UI primitive and styling contract used by the React client.
+ * ============================================================
+ */
+
 import { useTheme } from "next-themes";
 import { Toaster as Sonner, type ToasterProps } from "sonner";
 

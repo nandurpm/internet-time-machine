@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: recharts-interactions.spec.ts
+ * PURPOSE: Verifies chart tooltip and interaction behavior in a real browser with Playwright.
+ * ============================================================
+ */
+
 import { expect, test } from "@playwright/test";
 
 test.describe("Recharts v3 monitoring interactions", () => {

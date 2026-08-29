@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: trendSummaryExport.ts
+ * PURPOSE: Builds downloadable monitoring trend-summary reports while preserving provenance and endpoint privacy boundaries.
+ * ============================================================
+ */
+
 export type ExportableTrendSummary = {
   headline: string;
   narrative: string;

@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: systemRouter.ts
+ * PURPOSE: Defines platform/system tRPC procedures such as authentication state and account operations.
+ * ============================================================
+ */
+
 import { z } from "zod";
 import { notifyOwner } from "./notification";
 import { adminProcedure, publicProcedure, router } from "./trpc";

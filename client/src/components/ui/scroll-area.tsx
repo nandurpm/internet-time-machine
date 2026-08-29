@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: scroll-area.tsx
+ * PURPOSE: Provides the reusable scroll area UI primitive and styling contract used by the React client.
+ * ============================================================
+ */
+
 import * as React from "react";
 import * as ScrollAreaPrimitive from "@radix-ui/react-scroll-area";
 

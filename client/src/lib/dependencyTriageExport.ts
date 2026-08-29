@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: dependencyTriageExport.ts
+ * PURPOSE: Builds downloadable dependency-triage reports from normalized portfolio audit data.
+ * ============================================================
+ */
+
 import type { DependencyTriageLedger } from "@shared/dependencyTriage";
 
 export type DependencyTriageExportData = DependencyTriageLedger;

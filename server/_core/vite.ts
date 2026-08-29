@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: vite.ts
+ * PURPOSE: Connects Vite middleware in development and serves built client assets in production.
+ * ============================================================
+ */
+
 import express, { type Express } from "express";
 import fs from "fs";
 import { type Server } from "http";

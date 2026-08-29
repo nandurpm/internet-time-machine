@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: routers.ts
+ * PURPOSE: Composes the authenticated tRPC API, monitoring procedures, reports, dependency triage, and account operations.
+ * ============================================================
+ */
+
 import { COOKIE_NAME } from "@shared/const";
 import { parse as parseCookie } from "cookie";
 import { z } from "zod";

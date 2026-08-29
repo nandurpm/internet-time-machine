@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: NotFound.tsx
+ * PURPOSE: Renders the client-side fallback for routes that do not match an application page.
+ * ============================================================
+ */
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { AlertCircle, Home } from "lucide-react";

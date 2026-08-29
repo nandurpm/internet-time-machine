@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: monitoring.test.ts
+ * PURPOSE: Verifies endpoint validation, measurements, provenance-aware statistics, incidents, persistence, scheduling, and error recovery.
+ * ============================================================
+ */
+
 import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";

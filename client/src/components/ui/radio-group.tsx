@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: radio-group.tsx
+ * PURPOSE: Provides the reusable radio group UI primitive and styling contract used by the React client.
+ * ============================================================
+ */
+
 import * as React from "react";
 import * as RadioGroupPrimitive from "@radix-ui/react-radio-group";
 import { CircleIcon } from "lucide-react";

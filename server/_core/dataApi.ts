@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: dataApi.ts
+ * PURPOSE: Wraps hosted platform data APIs used by server-side integrations.
+ * ============================================================
+ */
+
 /**
  * Quick example (matches curl usage):
  *   await callDataApi("Youtube/search", {

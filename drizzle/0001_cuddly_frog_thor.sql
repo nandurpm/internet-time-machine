@@ -1,3 +1,8 @@
+-- ============================================================
+-- FILE: 0001_cuddly_frog_thor.sql
+-- PURPOSE: Applies the 0001_cuddly_frog_thor Drizzle migration to evolve the application's persisted monitoring, authentication, or reporting schema.
+-- ============================================================
+
 CREATE TABLE `dependency_audit_snapshots` (
 	`id` int AUTO_INCREMENT NOT NULL,
 	`recordedAt` timestamp NOT NULL,

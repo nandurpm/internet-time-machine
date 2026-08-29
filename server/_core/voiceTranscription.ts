@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: voiceTranscription.ts
+ * PURPOSE: Wraps the hosted speech-transcription API and normalizes transcription results.
+ * ============================================================
+ */
+
 /**
  * Voice transcription helper using internal Speech-to-Text service
  *

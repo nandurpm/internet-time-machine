@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: card.tsx
+ * PURPOSE: Provides the reusable card UI primitive and styling contract used by the React client.
+ * ============================================================
+ */
+
 import * as React from "react";
 
 import { cn } from "@/lib/utils";

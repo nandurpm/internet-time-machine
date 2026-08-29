@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: dependencyAuditRefresh.ts
+ * PURPOSE: Implements the server-side dependency audit refresh workflow and its validated application contract.
+ * ============================================================
+ */
+
 import { z } from "zod";
 import { listDependencyAuditSnapshots, recordDependencyAuditSnapshot } from "./db";
 import { type DependencyAuditSnapshot, dependencyTriageEvidence } from "../shared/dependencyTriage";

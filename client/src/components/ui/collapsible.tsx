@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: collapsible.tsx
+ * PURPOSE: Provides the reusable collapsible UI primitive and styling contract used by the React client.
+ * ============================================================
+ */
+
 import * as CollapsiblePrimitive from "@radix-ui/react-collapsible";
 
 function Collapsible({

@@ -1,3 +1,8 @@
+# ============================================================
+# FILE: static.yml
+# PURPOSE: Runs a legacy whole-repository static GitHub Pages deployment that is not a complete deployment of the full-stack application.
+# ============================================================
+
 # Simple workflow for deploying static content to GitHub Pages
 name: Deploy static content to Pages
 

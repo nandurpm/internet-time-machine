@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: schema.ts
+ * PURPOSE: Defines the Drizzle table schemas and inferred persistence types used by the server.
+ * ============================================================
+ */
+
 import { index, int, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
 
 /**

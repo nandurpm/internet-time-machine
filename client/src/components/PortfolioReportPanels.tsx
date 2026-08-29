@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: PortfolioReportPanels.tsx
+ * PURPOSE: Renders dependency-audit and portfolio-report panels, controls, downloads, and status feedback.
+ * ============================================================
+ */
+
 import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
 import { AlertTriangle, BellRing, CheckCircle2, Clock3, Loader2, ShieldCheck, WifiOff } from "lucide-react";

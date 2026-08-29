@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: toggle-group.tsx
+ * PURPOSE: Provides the reusable toggle group UI primitive and styling contract used by the React client.
+ * ============================================================
+ */
+
 "use client";
 
 import * as React from "react";

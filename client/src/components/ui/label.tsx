@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: label.tsx
+ * PURPOSE: Provides the reusable label UI primitive and styling contract used by the React client.
+ * ============================================================
+ */
+
 import * as React from "react";
 import * as LabelPrimitive from "@radix-ui/react-label";
 

@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: separator.tsx
+ * PURPOSE: Provides the reusable separator UI primitive and styling contract used by the React client.
+ * ============================================================
+ */
+
 import * as React from "react";
 import * as SeparatorPrimitive from "@radix-ui/react-separator";
 

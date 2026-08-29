@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: chart.tsx
+ * PURPOSE: Provides the reusable chart UI primitive and styling contract used by the React client.
+ * ============================================================
+ */
+
 import * as React from "react";
 import * as RechartsPrimitive from "recharts";
 

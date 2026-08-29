@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: ManusDialog.tsx
+ * PURPOSE: Renders platform-branded dialog content used by the hosted runtime integration.
+ * ============================================================
+ */
+
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";

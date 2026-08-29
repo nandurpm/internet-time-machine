@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: oauth.ts
+ * PURPOSE: Implements hosted OAuth login, callback, session, and user synchronization behavior.
+ * ============================================================
+ */
+
 import { COOKIE_NAME, ONE_YEAR_MS, OAUTH_STATE_COOKIE, decodeOAuthState } from "@shared/const";
 import { parse as parseCookieHeader } from "cookie";
 import type { Express, Request, Response } from "express";

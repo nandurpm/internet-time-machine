@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: avatar.tsx
+ * PURPOSE: Provides the reusable avatar UI primitive and styling contract used by the React client.
+ * ============================================================
+ */
+
 import * as React from "react";
 import * as AvatarPrimitive from "@radix-ui/react-avatar";
 

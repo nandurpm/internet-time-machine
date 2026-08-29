@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: outages.ts
+ * PURPOSE: Detects endpoint-local incident windows from consecutive failed measurements without inferring internet-wide outages.
+ * ============================================================
+ */
+
 import { randomUUID } from "node:crypto";
 import type { Measurement, OutageEvent } from "./types";
 

@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: checkbox.tsx
+ * PURPOSE: Provides the reusable checkbox UI primitive and styling contract used by the React client.
+ * ============================================================
+ */
+
 import * as React from "react";
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
 import { CheckIcon } from "lucide-react";

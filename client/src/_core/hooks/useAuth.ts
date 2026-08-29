@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: useAuth.ts
+ * PURPOSE: Loads the current authenticated user and exposes login, logout, and authentication-state helpers to the client.
+ * ============================================================
+ */
+
 import { startLogin } from "@/const";
 import { trpc } from "@/lib/trpc";
 import { TRPCClientError } from "@trpc/client";

@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: measurement.ts
+ * PURPOSE: Measures HTTP reachability/latency and DNS timing through provenance-aware adapters with bounded failures.
+ * ============================================================
+ */
+
 import { randomUUID } from "node:crypto";
 import { promises as dns } from "node:dns";
 import type { EndpointProfile, Measurement } from "./types";

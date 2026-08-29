@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: env.ts
+ * PURPOSE: Validates and exposes the server environment variables required by platform integrations.
+ * ============================================================
+ */
+
 export const ENV = {
   appId: process.env.VITE_APP_ID ?? "",
   cookieSecret: process.env.JWT_SECRET ?? "",

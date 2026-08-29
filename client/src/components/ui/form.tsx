@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: form.tsx
+ * PURPOSE: Provides the reusable form UI primitive and styling contract used by the React client.
+ * ============================================================
+ */
+
 "use client";
 
 import * as React from "react";

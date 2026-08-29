@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: App.tsx
+ * PURPOSE: Defines client-side routing, authentication gates, and the top-level application composition for the dashboard.
+ * ============================================================
+ */
+
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";

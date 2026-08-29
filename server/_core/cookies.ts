@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: cookies.ts
+ * PURPOSE: Defines secure authentication cookie options and helpers shared by login and logout flows.
+ * ============================================================
+ */
+
 import type { CookieOptions, Request } from "express";
 
 const LOCAL_HOSTS = new Set(["localhost", "127.0.0.1", "::1"]);

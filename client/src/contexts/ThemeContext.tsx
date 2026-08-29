@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: ThemeContext.tsx
+ * PURPOSE: Provides light/dark theme state, persistence, and system-preference handling through React context.
+ * ============================================================
+ */
+
 import React, { createContext, useContext, useEffect, useState } from "react";
 
 type Theme = "light" | "dark";

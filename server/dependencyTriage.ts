@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: dependencyTriage.ts
+ * PURPOSE: Implements the server-side dependency triage workflow and its validated application contract.
+ * ============================================================
+ */
+
 import { getDependencyTriageWithRefreshes } from "./dependencyAuditRefresh";
 
 /**

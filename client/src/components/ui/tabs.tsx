@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: tabs.tsx
+ * PURPOSE: Provides the reusable tabs UI primitive and styling contract used by the React client.
+ * ============================================================
+ */
+
 import * as React from "react";
 import * as TabsPrimitive from "@radix-ui/react-tabs";
 

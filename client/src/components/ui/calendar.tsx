@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: calendar.tsx
+ * PURPOSE: Provides the reusable calendar UI primitive and styling contract used by the React client.
+ * ============================================================
+ */
+
 import * as React from "react";
 import {
   ChevronDownIcon,

@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: auth.logout.test.ts
+ * PURPOSE: Verifies the auth.logout.test server behavior, authorization, persistence, and response contract.
+ * ============================================================
+ */
+
 import { describe, expect, it } from "vitest";
 import { appRouter } from "./routers";
 import { COOKIE_NAME } from "../shared/const";

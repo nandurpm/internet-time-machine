@@ -1,3 +1,8 @@
+-- ============================================================
+-- FILE: 0003_great_exodus.sql
+-- PURPOSE: Applies the 0003_great_exodus Drizzle migration to evolve the application's persisted monitoring, authentication, or reporting schema.
+-- ============================================================
+
 CREATE TABLE `portfolio_validation_results` (
 	`id` int AUTO_INCREMENT NOT NULL,
 	`runId` int NOT NULL,

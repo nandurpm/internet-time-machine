@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: dependencyTriage.test.ts
+ * PURPOSE: Verifies the dependency triage.test server behavior, authorization, persistence, and response contract.
+ * ============================================================
+ */
+
 import { describe, expect, it } from "vitest";
 import { getDependencyTriage } from "./dependencyTriage";
 

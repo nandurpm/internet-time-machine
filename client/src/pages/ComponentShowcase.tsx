@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: ComponentShowcase.tsx
+ * PURPOSE: Displays the maintained UI primitive catalog for visual review and interaction testing.
+ * ============================================================
+ */
+
 import {
   Accordion,
   AccordionContent,

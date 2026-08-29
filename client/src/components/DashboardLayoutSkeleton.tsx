@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: DashboardLayoutSkeleton.tsx
+ * PURPOSE: Provides the loading placeholder that mirrors the dashboard shell while authentication or page data resolves.
+ * ============================================================
+ */
+
 import { Skeleton } from './ui/skeleton';
 
 export function DashboardLayoutSkeleton() {

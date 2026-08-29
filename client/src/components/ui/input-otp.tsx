@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: input-otp.tsx
+ * PURPOSE: Provides the reusable input otp UI primitive and styling contract used by the React client.
+ * ============================================================
+ */
+
 import * as React from "react";
 import { OTPInput, OTPInputContext } from "input-otp";
 import { MinusIcon } from "lucide-react";

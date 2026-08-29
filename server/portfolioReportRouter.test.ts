@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: portfolioReportRouter.test.ts
+ * PURPOSE: Verifies the portfolio report router.test server behavior, authorization, persistence, and response contract.
+ * ============================================================
+ */
+
 import { describe, expect, it, vi } from "vitest";
 
 vi.mock("./portfolioReports", () => ({

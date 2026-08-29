@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: dependencyTriageExport.test.ts
+ * PURPOSE: Verifies the dependency triage export.test export format, content boundaries, and regression behavior.
+ * ============================================================
+ */
+
 import { describe, expect, it } from "vitest";
 import { dependencyTriageEvidence } from "@shared/dependencyTriage";
 import { dependencyTriageCsv, dependencyTriageFilename, dependencyTriagePdfText } from "./dependencyTriageExport";

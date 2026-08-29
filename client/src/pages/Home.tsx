@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: Home.tsx
+ * PURPOSE: Renders the main monitoring dashboard, configuration, history, charts, incident views, scheduling, and user-triggered trend summaries.
+ * ============================================================
+ */
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import DashboardLayout from "@/components/DashboardLayout";

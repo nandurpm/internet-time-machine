@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: index.css
+ * PURPOSE: Defines global Tailwind imports, theme tokens, typography, and base browser styles for the dashboard.
+ * ============================================================
+ */
+
 @import "tailwindcss";
 @import "tw-animate-css";
 

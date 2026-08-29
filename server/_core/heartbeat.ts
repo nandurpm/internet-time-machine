@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: heartbeat.ts
+ * PURPOSE: Exposes a lightweight process health signal for runtime monitoring.
+ * ============================================================
+ */
+
 import { TRPCError } from "@trpc/server";
 import { ENV } from "./env";
 

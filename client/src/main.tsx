@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: main.tsx
+ * PURPOSE: Bootstraps React, query state, tRPC, authentication, themes, error handling, and the application root.
+ * ============================================================
+ */
+
 import { trpc } from "@/lib/trpc";
 import { COOKIE_NAME, UNAUTHED_ERR_MSG } from '@shared/const';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";

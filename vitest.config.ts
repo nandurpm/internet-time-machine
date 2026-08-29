@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: vitest.config.ts
+ * PURPOSE: Configures Vitest discovery and Node execution for the server and client unit suites.
+ * ============================================================
+ */
+
 import { defineConfig } from "vitest/config";
 import path from "path";
 

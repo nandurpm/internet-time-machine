@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: dependencyAuditRefreshHandler.ts
+ * PURPOSE: Adapts HTTP requests to the dependency audit refresh server service with validation and normalized responses.
+ * ============================================================
+ */
+
 import type { Request, Response } from "express";
 import { HttpError } from "../shared/_core/errors";
 import { sdk } from "./_core/sdk";

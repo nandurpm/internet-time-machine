@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: trendSummaryExport.test.ts
+ * PURPOSE: Verifies the trend summary export.test export format, content boundaries, and regression behavior.
+ * ============================================================
+ */
+
 import { describe, expect, it } from "vitest";
 import { reorderTrendSummaryQueue, trendSummaryBatchFilename, trendSummaryFilename, trendSummaryMarkdown } from "./trendSummaryExport";
 

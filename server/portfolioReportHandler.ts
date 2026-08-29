@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: portfolioReportHandler.ts
+ * PURPOSE: Adapts HTTP requests to the portfolio report server service with validation and normalized responses.
+ * ============================================================
+ */
+
 import type { Request, Response } from "express";
 import { HttpError } from "../shared/_core/errors";
 import { sdk } from "./_core/sdk";

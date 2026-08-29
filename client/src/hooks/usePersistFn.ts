@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: usePersistFn.ts
+ * PURPOSE: Provides the reusable use persist fn React hook used to stabilize responsive or composition behavior.
+ * ============================================================
+ */
+
 import { useRef } from "react";
 
 type noop = (...args: any[]) => any;

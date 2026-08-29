@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: storageProxy.ts
+ * PURPOSE: Validates and proxies bounded object-storage requests without exposing storage credentials to the browser.
+ * ============================================================
+ */
+
 import type { Express, RequestHandler } from "express";
 import { ENV } from "./env";
 

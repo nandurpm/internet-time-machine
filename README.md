@@ -58,14 +58,20 @@ The supported intervals are 15, 30, 60, 120, 240, 360, 720, and 1440 minutes. Th
 
 ## Repository layout
 
-```text
-client/                  Responsive dashboard and charts
-server/monitoring/       Measurement, persistence, statistics, incident, and scheduler layers
-docs/                    Safety, privacy, configuration, and scheduling guidance
-examples/                Sanitized configuration examples
-docs/                    Operational documentation
-tests/                   Not used; server/monitoring/monitoring.test.ts is the active Vitest suite
-```
+| Path | Responsibility |
+|---|---|
+| [`client/`](client/README.md) | React dashboard, charts, configuration screens, shared UI primitives, and browser tests. |
+| [`server/`](server/README.md) | Express/tRPC entry point, authentication and hosted-platform adapters, reports, storage, and server tests. |
+| [`server/monitoring/`](server/monitoring/README.md) | Endpoint validation, measurement, persistence, statistics, incidents, scheduling, and AI trend summaries. |
+| [`shared/`](shared/README.md) | Contracts and constants shared by browser and server code. |
+| [`drizzle/`](drizzle/README.md) | Drizzle schema definitions and ordered SQL migrations for application data. |
+| [`scripts/`](scripts/README.md) | Cross-platform local launch orchestration. |
+| [`docs/`](docs/README.md) | Detailed local-use, privacy, scheduling, AI, deployment, and security guidance. |
+| [`examples/`](examples/README.md) | Sanitized endpoint-profile configuration examples. |
+| [`patches/`](patches/README.md) | Version-specific dependency patches applied by pnpm. |
+| [`.github/`](.github/README.md) | Repository automation configuration and notes about legacy deployment workflows. |
+
+Tests intentionally live beside the behavior they verify, primarily under `server/`, `server/_core/`, `server/monitoring/`, and `client/src/lib/`. Browser interaction coverage lives in `client/e2e/`.
 
 ## Validation
 
@@ -102,13 +108,20 @@ pnpm install
 
 ### Open it locally
 
-Start the local web/report server:
+Start the development server on the default port (`3000`):
 
 ```bash
-pnpm start
+pnpm dev
 ```
 
-Then open the URL printed by the terminal. The production report hosts use http://localhost:4080 unless a different PORT value is set. To choose another port, use PORT=5050 pnpm start on Linux/macOS or set PORT=5050 && pnpm start in Windows Command Prompt.
+For the cross-platform launcher and automatic free-port fallback, use `./run-local.sh` on Linux/macOS or `run-local.cmd` on Windows. To run the production bundle, build it first and then use the portable launcher:
+
+```bash
+pnpm build
+pnpm start:local -- --port=4100
+```
+
+Then open the URL printed by the terminal. See [`docs/LOCAL_RUN.md`](docs/LOCAL_RUN.md) for platform-specific commands and port selection.
 
 
 ### Use the hosted version
@@ -125,3 +138,16 @@ The same Node.js commands work in Windows PowerShell, Windows Command Prompt, an
 
 This project follows its existing local-first and read-only boundaries. Demo/report content is generated or supplied through the documented local workflow; a hosted page does not provide hidden access to your device, private files, hardware, accounts, or network.
 
+## Deployment and automation
+
+The supported production build is the combined browser and Node output created by `pnpm build`. It requires a runtime capable of starting `dist/index.js` and supplying the server-side configuration used by the application. The workflows under [`.github/workflows/`](.github/workflows/README.md) are legacy GitHub Pages/Webpack experiments; they do not deploy the current full-stack application and should not be treated as the production release process.
+
+## Documentation map
+
+- [`docs/README.md`](docs/README.md) — operational and security documentation index.
+- [`client/README.md`](client/README.md) — browser application boundaries and subfolder map.
+- [`server/README.md`](server/README.md) — backend entry points, domain modules, and tests.
+- [`server/monitoring/README.md`](server/monitoring/README.md) — monitoring-domain responsibilities and provenance rules.
+- [`shared/README.md`](shared/README.md) — cross-runtime contracts.
+- [`drizzle/README.md`](drizzle/README.md) — schema and migration guidance.
+- [`.github/README.md`](.github/README.md) — automation scope and workflow caveats.

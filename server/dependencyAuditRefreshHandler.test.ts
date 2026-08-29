@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: dependencyAuditRefreshHandler.test.ts
+ * PURPOSE: Verifies the dependency audit refresh handler.test server behavior, authorization, persistence, and response contract.
+ * ============================================================
+ */
+
 import type { Request, Response } from "express";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 

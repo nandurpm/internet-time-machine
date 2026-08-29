@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: useMobile.tsx
+ * PURPOSE: Provides the reusable use mobile React hook used to stabilize responsive or composition behavior.
+ * ============================================================
+ */
+
 import * as React from "react";
 
 const MOBILE_BREAKPOINT = 768;

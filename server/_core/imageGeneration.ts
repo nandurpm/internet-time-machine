@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: imageGeneration.ts
+ * PURPOSE: Wraps the hosted image-generation API and normalizes generated image responses.
+ * ============================================================
+ */
+
 /**
  * Image generation helper using internal ImageService
  *

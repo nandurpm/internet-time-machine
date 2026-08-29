@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: scheduledHandler.ts
+ * PURPOSE: Authenticates platform scheduler callbacks and delegates a scheduled endpoint collection cycle.
+ * ============================================================
+ */
+
 import type { Request, Response } from "express";
 import { sdk } from "../_core/sdk";
 import { collectScheduledMeasurement } from "./service";

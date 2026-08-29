@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: portfolioReports.ts
+ * PURPOSE: Implements the server-side portfolio reports workflow and its validated application contract.
+ * ============================================================
+ */
+
 import { z } from "zod";
 import {
   listPortfolioValidationResults,

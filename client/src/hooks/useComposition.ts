@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: useComposition.ts
+ * PURPOSE: Provides the reusable use composition React hook used to stabilize responsive or composition behavior.
+ * ============================================================
+ */
+
 import { useRef } from "react";
 import { usePersistFn } from "./usePersistFn";
 

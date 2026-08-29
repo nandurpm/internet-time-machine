@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: vite.config.ts
+ * PURPOSE: Configures the Vite React client build, aliases, Tailwind pipeline, and full-stack development plugins.
+ * ============================================================
+ */
+
 import { jsxLocPlugin } from "@builder.io/vite-plugin-jsx-loc";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";

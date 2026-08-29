@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: switch.tsx
+ * PURPOSE: Provides the reusable switch UI primitive and styling contract used by the React client.
+ * ============================================================
+ */
+
 import * as React from "react";
 import * as SwitchPrimitive from "@radix-ui/react-switch";
 

@@ -1,3 +1,10 @@
+/*
+ * ============================================================
+ * FILE: types.ts
+ * PURPOSE: Defines monitoring profiles, measurements, provenance labels, incidents, statistics, and adapter contracts.
+ * ============================================================
+ */
+
 export const metricNames = [
   "availability",
   "latencyMs",
